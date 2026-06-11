@@ -228,7 +228,7 @@ public class BaseTest {
 	}
 private void change1() {
 		
-		System.out.println("change");// TODO Auto-generated method stub
+		System.out.println("test");// TODO Auto-generated method stub
 
 	}
 }
