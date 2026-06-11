@@ -194,6 +194,7 @@ public class BaseTest {
 			LoggerUtil.warn("TEST SKIPPED");
 			test.skip("TEST SKIPPED");
 		}
+		
 
 		// ── FLUSH REPORT ──────────────────────────────────────
 		// Write current test results to the report file
@@ -219,5 +220,10 @@ public class BaseTest {
 		}
 
 		LoggerUtil.info("Extent Report Generated");
+	}
+	private void change() {
+		
+		System.out.println("change");// TODO Auto-generated method stub
+
 	}
 }
