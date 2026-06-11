@@ -1,0 +1,515 @@
+<html>
+<head>
+<title>TestNG:  Login Tests</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Login Tests</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>18/5/0</td>
+</tr><tr>
+<td>Started on:</td><td>Tue Jun 02 10:49:47 IST 2026</td>
+</tr>
+<tr><td>Total time:</td><td>84 seconds (84496 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td><b>Attribute(s)</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='login.TC_01_023.verifyLoggedInUserRedirectedFromLoginPage()'><b>verifyLoggedInUserRedirectedFromLoginPage</b><br>Test class: login.TC_01_023<br>Test method: TC-01-023 : Verify already logged-in user accessing login page is redirected</td>
+<td><div><pre>java.lang.AssertionError: Logged-in user was not redirected to Projects page expected [true] but found [false]
+	at login.TC_01_023.verifyLoggedInUserRedirectedFromLoginPage(TC_01_023.java:58)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+... Removed 14 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace173401360", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace173401360'><pre>java.lang.AssertionError: Logged-in user was not redirected to Projects page expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:111)
+	at org.testng.Assert.failNotEquals(Assert.java:1590)
+	at org.testng.Assert.assertTrue(Assert.java:57)
+	at login.TC_01_023.verifyLoggedInUserRedirectedFromLoginPage(TC_01_023.java:58)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.testng.internal.thread.graph.TestNGFutureTask.run(TestNGFutureTask.java:22)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+</pre></div></td>
+<td>31</td>
+<td>login.TC_01_023@3af9c5b7</td></tr>
+<tr>
+<td title='login.TC_01_004.verifyNonApprovedUserLogin()'><b>verifyNonApprovedUserLogin</b><br>Test class: login.TC_01_004<br>Test method: TC-01-004 :Verify login attempt by non-approved user</td>
+<td><div><pre>com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;Your permission request is still pending admin approval.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:132)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:130)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:118)
+	at com.microsoft.playwright.impl.FrameImpl.textContentImpl(FrameImpl.java:818)
+	at com.microsoft.playwright.impl.FrameImpl.lambda$textContent$38(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LoggingSupport.withLogging(LoggingSupport.java:47)
+	at com.microsoft.playwright.impl.ChannelOwner.withLogging(ChannelOwner.java:97)
+	at com.microsoft.playwright.impl.FrameImpl.textContent(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LocatorImpl.textContent(LocatorImpl.java:606)
+	at com.microsoft.playwright.Locator.textContent(Locator.java:5286)
+	at Pages.LoginPage.getLoginwithunapprovedemailErrorMessage(LoginPage.java:125)
+	at login.TC_01_004.verifyNonApprovedUserLogin(TC_01_004.java:84)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;Your permission request is still pending admin approval.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:254)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:211)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:130)
+	... 27 more
+... Removed 11 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace938802787", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace938802787'><pre>com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;Your permission request is still pending admin approval.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:132)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:130)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:118)
+	at com.microsoft.playwright.impl.FrameImpl.textContentImpl(FrameImpl.java:818)
+	at com.microsoft.playwright.impl.FrameImpl.lambda$textContent$38(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LoggingSupport.withLogging(LoggingSupport.java:47)
+	at com.microsoft.playwright.impl.ChannelOwner.withLogging(ChannelOwner.java:97)
+	at com.microsoft.playwright.impl.FrameImpl.textContent(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LocatorImpl.textContent(LocatorImpl.java:606)
+	at com.microsoft.playwright.Locator.textContent(Locator.java:5286)
+	at Pages.LoginPage.getLoginwithunapprovedemailErrorMessage(LoginPage.java:125)
+	at login.TC_01_004.verifyNonApprovedUserLogin(TC_01_004.java:84)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.testng.internal.thread.graph.TestNGFutureTask.run(TestNGFutureTask.java:22)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;Your permission request is still pending admin approval.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:254)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:211)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:130)
+	... 27 more
+</pre></div></td>
+<td>31</td>
+<td>login.TC_01_004@1e178745</td></tr>
+<tr>
+<td title='login.TC_01_024.verifyBrowserBackButtonAfterLogin()'><b>verifyBrowserBackButtonAfterLogin</b><br>Test class: login.TC_01_024<br>Test method: TC-01-024 : Verify browser back button does not expose login page after login</td>
+<td><div><pre>java.lang.AssertionError: Login page is accessible using browser back button after login expected [true] but found [false]
+	at login.TC_01_024.verifyBrowserBackButtonAfterLogin(TC_01_024.java:51)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+... Removed 14 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1987154966", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1987154966'><pre>java.lang.AssertionError: Login page is accessible using browser back button after login expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:111)
+	at org.testng.Assert.failNotEquals(Assert.java:1590)
+	at org.testng.Assert.assertTrue(Assert.java:57)
+	at login.TC_01_024.verifyBrowserBackButtonAfterLogin(TC_01_024.java:51)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.testng.internal.thread.graph.TestNGFutureTask.run(TestNGFutureTask.java:22)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+</pre></div></td>
+<td>32</td>
+<td>login.TC_01_024@37271612</td></tr>
+<tr>
+<td title='login.TC_01_026.verifyLoginWithUppercaseOrMixedCaseEmail()'><b>verifyLoginWithUppercaseOrMixedCaseEmail</b><br>Test class: login.TC_01_026<br>Test method: TC-01-026 : Verify login with uppercase or mixed-case email</td>
+<td><div><pre>java.lang.AssertionError: Login failed with uppercase/mixed-case email expected [true] but found [false]
+	at login.TC_01_026.verifyLoginWithUppercaseOrMixedCaseEmail(TC_01_026.java:55)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+... Removed 14 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace400896866", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace400896866'><pre>java.lang.AssertionError: Login failed with uppercase/mixed-case email expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:111)
+	at org.testng.Assert.failNotEquals(Assert.java:1590)
+	at org.testng.Assert.assertTrue(Assert.java:57)
+	at login.TC_01_026.verifyLoginWithUppercaseOrMixedCaseEmail(TC_01_026.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.testng.internal.thread.graph.TestNGFutureTask.run(TestNGFutureTask.java:22)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+</pre></div></td>
+<td>31</td>
+<td>login.TC_01_026@ed7f8b4</td></tr>
+<tr>
+<td title='login.TC_01_011.verifyLoginWithVeryLongPasswordInput()'><b>verifyLoginWithVeryLongPasswordInput</b><br>Test class: login.TC_01_011<br>Test method: TC-01-011 : Verify login with very long password input</td>
+<td><div><pre>com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;No account found with this email.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:132)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:130)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:118)
+	at com.microsoft.playwright.impl.FrameImpl.textContentImpl(FrameImpl.java:818)
+	at com.microsoft.playwright.impl.FrameImpl.lambda$textContent$38(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LoggingSupport.withLogging(LoggingSupport.java:47)
+	at com.microsoft.playwright.impl.ChannelOwner.withLogging(ChannelOwner.java:97)
+	at com.microsoft.playwright.impl.FrameImpl.textContent(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LocatorImpl.textContent(LocatorImpl.java:606)
+	at com.microsoft.playwright.Locator.textContent(Locator.java:5286)
+	at Pages.LoginPage.getEmailLengthValidationMessage(LoginPage.java:165)
+	at login.TC_01_011.verifyLoginWithVeryLongPasswordInput(TC_01_011.java:68)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;No account found with this email.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:254)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:211)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:130)
+	... 27 more
+... Removed 11 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1161402241", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1161402241'><pre>com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;No account found with this email.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:132)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:130)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:118)
+	at com.microsoft.playwright.impl.FrameImpl.textContentImpl(FrameImpl.java:818)
+	at com.microsoft.playwright.impl.FrameImpl.lambda$textContent$38(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LoggingSupport.withLogging(LoggingSupport.java:47)
+	at com.microsoft.playwright.impl.ChannelOwner.withLogging(ChannelOwner.java:97)
+	at com.microsoft.playwright.impl.FrameImpl.textContent(FrameImpl.java:809)
+	at com.microsoft.playwright.impl.LocatorImpl.textContent(LocatorImpl.java:606)
+	at com.microsoft.playwright.Locator.textContent(Locator.java:5286)
+	at Pages.LoginPage.getEmailLengthValidationMessage(LoginPage.java:165)
+	at login.TC_01_011.verifyLoginWithVeryLongPasswordInput(TC_01_011.java:68)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.testng.internal.thread.graph.TestNGFutureTask.run(TestNGFutureTask.java:22)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message=&apos;Timeout 30000ms exceeded.
+  name=&apos;TimeoutError
+  stack=&apos;TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\progress.js:76:26)
+    at Frame._callOnElementOnceMatches (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1379:23)
+    at Frame.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\frames.js:1055:17)
+    at FrameDispatcher.textContent (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\frameDispatcher.js:138:37)
+    at FrameDispatcher._handleCommand (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\SHRINI~1\AppData\Local\Temp\playwright-java-14163997433980271710\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(&quot;text=&apos;No account found with this email.&apos;&quot;)
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:254)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:211)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:130)
+	... 27 more
+</pre></div></td>
+<td>31</td>
+<td>login.TC_01_011@445b295b</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td><b>Attribute(s)</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='login.TC_01_014.verifyLoginButtonIsVisibleAndClickable()'><b>verifyLoginButtonIsVisibleAndClickable</b><br>Test class: login.TC_01_014<br>Test method: TC-01-014 : Verify Log In button is visible and clickable</td>
+<td></td>
+<td>0</td>
+<td>login.TC_01_014@757277dc</td></tr>
+<tr>
+<td title='login.TC_01_027.verifyErrorMessageDisappearsAfterCorrectingCredentials()'><b>verifyErrorMessageDisappearsAfterCorrectingCredentials</b><br>Test class: login.TC_01_027<br>Test method: TC-01-027 Verify error message disappears after correcting credentials</td>
+<td></td>
+<td>2</td>
+<td>login.TC_01_027@4c309d4d</td></tr>
+<tr>
+<td title='login.TC_01_012.verifyPasswordIsMaskedByDefault()'><b>verifyPasswordIsMaskedByDefault</b><br>Test class: login.TC_01_012<br>Test method: TC-01-012 : Verify password is masked by default</td>
+<td></td>
+<td>0</td>
+<td>login.TC_01_012@49e5f737</td></tr>
+<tr>
+<td title='login.TC_01_021.verifyLoginPageUIElements()'><b>verifyLoginPageUIElements</b><br>Test class: login.TC_01_021<br>Test method: TC-01-021 : Verify login page UI elements are displayed correctly</td>
+<td></td>
+<td>0</td>
+<td>login.TC_01_021@10aa41f2</td></tr>
+<tr>
+<td title='login.TC_01_005.verifyLoginWithEmptyEmailField()'><b>verifyLoginWithEmptyEmailField</b><br>Test class: login.TC_01_005<br>Test method: TC-01-005 : Verify login with empty email field</td>
+<td></td>
+<td>1</td>
+<td>login.TC_01_005@192c3f1e</td></tr>
+<tr>
+<td title='login.TC_01_009.verifyLoginWithEmailContainingSpaces()'><b>verifyLoginWithEmailContainingSpaces</b><br>Test class: login.TC_01_009<br>Test method: TC-01-009 : Verify login with email containing spaces</td>
+<td></td>
+<td>4</td>
+<td>login.TC_01_009@2e377400</td></tr>
+<tr>
+<td title='login.TC_01_002.verifyInvalidPasswordLogin()'><b>verifyInvalidPasswordLogin</b><br>Test class: login.TC_01_002<br>Test method: TC-01-002 : Verify login with incorrect password</td>
+<td></td>
+<td>3</td>
+<td>login.TC_01_002@7ee8290b</td></tr>
+<tr>
+<td title='login.TC_01_007.verifyLoginWithBothFieldsEmpty()'><b>verifyLoginWithBothFieldsEmpty</b><br>Test class: login.TC_01_007<br>Test method: TC-01-007 : Verify login with both fields empty</td>
+<td></td>
+<td>1</td>
+<td>login.TC_01_007@7494f96a</td></tr>
+<tr>
+<td title='login.TC_01_001.verifyValidLogin()'><b>verifyValidLogin</b><br>Test class: login.TC_01_001<br>Test method: TC-01-001 : Verify valid login with approved user credentials</td>
+<td></td>
+<td>1</td>
+<td>login.TC_01_001@291caca8</td></tr>
+<tr>
+<td title='login.TC_01_006.verifyLoginWithEmptyPasswordField()'><b>verifyLoginWithEmptyPasswordField</b><br>Test class: login.TC_01_006<br>Test method: TC-01-006 : Verify login with empty password field</td>
+<td></td>
+<td>1</td>
+<td>login.TC_01_006@26b3fd41</td></tr>
+<tr>
+<td title='login.TC_01_015.verifyEnterKeySubmitsLoginForm()'><b>verifyEnterKeySubmitsLoginForm</b><br>Test class: login.TC_01_015<br>Test method: TC-01-015 : Verify pressing Enter key submits the login form</td>
+<td></td>
+<td>3</td>
+<td>login.TC_01_015@687e99d8</td></tr>
+<tr>
+<td title='login.TC_01_010.verifyLoginWithVeryLongEmailInput()'><b>verifyLoginWithVeryLongEmailInput</b><br>Test class: login.TC_01_010<br>Test method: TC-01-010 : Verify login with very long email input</td>
+<td></td>
+<td>1</td>
+<td>login.TC_01_010@1757cd72</td></tr>
+<tr>
+<td title='login.TC_01_019.verifySuccessfulLoginRedirectsToProjectsPage()'><b>verifySuccessfulLoginRedirectsToProjectsPage</b><br>Test class: login.TC_01_019<br>Test method: TC-01-019 : Verify successful login redirects to Projects page</td>
+<td></td>
+<td>1</td>
+<td>login.TC_01_019@c86b9e3</td></tr>
+<tr>
+<td title='login.TC_01_003.verifyUnregisteredEmailLogin()'><b>verifyUnregisteredEmailLogin</b><br>Test class: login.TC_01_003<br>Test method:  TC-01-003 :Verify login with unregistered email</td>
+<td></td>
+<td>4</td>
+<td>login.TC_01_003@1f59a598</td></tr>
+<tr>
+<td title='login.TC_01_008.verifyLoginWithInvalidEmailFormat()'><b>verifyLoginWithInvalidEmailFormat</b><br>Test class: login.TC_01_008<br>Test method: TC-01-008 : Verify login with invalid email format</td>
+<td></td>
+<td>1</td>
+<td>login.TC_01_008@561b6512</td></tr>
+<tr>
+<td title='login.TC_01_018.verifySignupLinkNavigation()'><b>verifySignupLinkNavigation</b><br>Test class: login.TC_01_018<br>Test method: TC-01-018 : Verify 'Signup' link is present and navigates correctly</td>
+<td></td>
+<td>0</td>
+<td>login.TC_01_018@6aaceffd</td></tr>
+<tr>
+<td title='login.TC_01_013.verifyPasswordVisibilityToggle()'><b>verifyPasswordVisibilityToggle</b><br>Test class: login.TC_01_013<br>Test method: TC-01-013 : Verify password visibility toggle using eye icon</td>
+<td></td>
+<td>0</td>
+<td>login.TC_01_013@5c671d7f</td></tr>
+<tr>
+<td title='login.TC_01_017.verifyForgotPasswordLinkNavigation()'><b>verifyForgotPasswordLinkNavigation</b><br>Test class: login.TC_01_017<br>Test method: TC-01-017 : Verify 'Forgot Password?' link is present and navigates correctly</td>
+<td></td>
+<td>0</td>
+<td>login.TC_01_017@e4487af</td></tr>
+</table><p>
+</body>
+</html>
