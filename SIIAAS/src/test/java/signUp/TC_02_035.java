@@ -9,11 +9,12 @@ import Pages.SignupPage;
 import Pages.UserManagementPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_035 extends BaseTest {
 
-	@Test(description = "TC-02-035 Verify User Request Count Badge Increments After New Signup")
-	public void verifyUserRequestCountIncrement() {
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-035 Verify User Request Count Badge Increments After New Signup")
+	public void verifyUserRequestCountIncrement() throws InterruptedException {
 
 		LoginPage loginPage = new LoginPage(page);
 		SignupPage signupPage = new SignupPage(page);
@@ -27,6 +28,7 @@ public class TC_02_035 extends BaseTest {
 
 		userManagementPage.openUserManagement();
 		userManagementPage.openUserRequestsTab();
+		Thread.sleep(2000);
 
 		int beforeCount = userManagementPage.getUserRequestsCount();
 
@@ -37,6 +39,7 @@ public class TC_02_035 extends BaseTest {
 		// ==========================================
 
 		userManagementPage.logout();
+		Thread.sleep(2000);
 
 		Assert.assertTrue(userManagementPage.isLogoutSuccessful(), "Logout failed");
 

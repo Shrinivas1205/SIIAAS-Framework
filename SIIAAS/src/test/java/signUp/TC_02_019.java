@@ -8,28 +8,27 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_019 extends BaseTest {
 
-	@Test(description = "TC-02-019 : Verify signup with already registered email")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-019 Verify signup with already registered email")
 	public void verifySignupWithAlreadyRegisteredEmail() {
 
 		LoginPage loginPage = new LoginPage(page);
 		SignupPage signupPage = new SignupPage(page);
 
-		test.info("TC-02-019 Execution Started");
+		LoggerUtil.info("========== TC-02-019 STARTED ==========");
 
-		/*
-		 * STEP 1 : Open Signup Page
-		 */
+		// Open Signup Page
 		LoggerUtil.info("Opening Signup Page");
 
 		loginPage.clickSignupLink();
 
-		/*
-		 * STEP 2 : Fill Signup Form
-		 */
-		LoggerUtil.info("Entering Signup Details");
+		loginPage.attachStepScreenshot("Signup page opened");
+
+		// Enter Existing User Details
+		LoggerUtil.info("Entering existing user signup details");
 
 		signupPage.enterFullName(ConfigReader.getProperty("signup.name"));
 
@@ -45,22 +44,24 @@ public class TC_02_019 extends BaseTest {
 
 		signupPage.selectLocation(ConfigReader.getProperty("signup.location"));
 
-		/*
-		 * STEP 3 : Click Sign Up
-		 */
+		loginPage.attachStepScreenshot("Entered already registered email");
+
+		// Click Sign Up
 		LoggerUtil.info("Clicking Sign Up Button");
 
 		signupPage.clickSignUpButton();
 
-		/*
-		 * STEP 4 : Verify Error Message
-		 */
-		String actualMessage = signupPage.getValidationMessage("user with this email already exists.");
+		loginPage.attachStepScreenshot("Clicked Sign Up with existing email");
 
-		Assert.assertEquals(actualMessage, "user with this email already exists.", "Incorrect error message displayed");
+		// Verify Existing Email Validation
+		LoggerUtil.info("Verifying existing email validation message");
 
-		LoggerUtil.info("Existing Email Validation Verified");
+		String actualMessage = signupPage.getValidationMessage("Email already exists.");
 
-		test.pass("Existing Email Validation Verified Successfully");
+		Assert.assertEquals(actualMessage, "Email already exists.", "Incorrect error message displayed");
+
+		loginPage.attachStepScreenshot("Existing email validation displayed");
+
+		LoggerUtil.info("========== TC-02-019 PASSED ==========");
 	}
 }

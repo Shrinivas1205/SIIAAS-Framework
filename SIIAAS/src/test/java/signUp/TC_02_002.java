@@ -6,26 +6,46 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
-import utils.DataProviders;
+import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_002 extends BaseTest {
 
-	@Test(dataProvider = "strongPasswordData", dataProviderClass = DataProviders.class)
-	public void verifySignupWithStrongPassword(String name, String email, String password, String confirmPassword,
-			String designation, String department, String location) {
+	@Test(retryAnalyzer = RetryAnalyzer.class,
+			description="TC-02-002 Signup with valid strong password")
+			public void verifySignupWithStrongPassword() {
 
-		LoginPage loginPage = new LoginPage(page);
-		SignupPage signupPage = new SignupPage(page);
+			    LoginPage loginPage = new LoginPage(page);
+			    SignupPage signupPage = new SignupPage(page);
 
-		loginPage.clickSignupLink();
+			    LoggerUtil.info("========== TC-02-002 STARTED ==========");
 
-		signupPage.signup(name, email, password, confirmPassword, designation, department, location);
-		loginPage.attachStepScreenshot("User enterted sign up details");
-		signupPage.clickSignUpButton();
-		loginPage.attachStepScreenshot("Userclicked sign up button");
+			    String name = ConfigReader.getProperty("tc02001.name");
+			    String email = ConfigReader.getProperty("tc02001.email");
+			    String password = ConfigReader.getProperty("tc02001.password");
+			    String confirmPassword = ConfigReader.getProperty("tc02001.confirmPassword");
+			    String designation = ConfigReader.getProperty("tc02001.designation");
+			    String department = ConfigReader.getProperty("tc02001.department");
+			    String location = ConfigReader.getProperty("tc02001.location");
 
-		Assert.assertTrue(signupPage.isApprovalMessageDisplayed(), "Signup failed");
-		loginPage.attachStepScreenshot("User completed Sign up Successfully");
-	}
+			    loginPage.clickSignupLink();
+
+			    signupPage.signup(
+			            name,
+			            email,
+			            password,
+			            confirmPassword,
+			            designation,
+			            department,
+			            location);
+
+			    loginPage.attachStepScreenshot("User entered signup details");
+
+			    signupPage.clickSignUpButton();
+
+			    Assert.assertTrue(signupPage.isApprovalMessageDisplayed());
+
+			    loginPage.attachStepScreenshot("Signup Successful");
+			}
 }

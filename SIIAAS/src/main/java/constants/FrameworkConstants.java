@@ -1,18 +1,21 @@
 package constants;
 
 /*
- * This class stores all reusable constant values.
- * Constants means values that usually don't change.
+ * ============================================================
+ * FrameworkConstants
+ * ============================================================
+ * Purpose:
+ * Stores reusable constant values used across the framework.
+ * ============================================================
  */
 
-public class FrameworkConstants {
+public final class FrameworkConstants {
 
-    // Screenshot folder path
-    public static final String SCREENSHOT_PATH =
-            "screenshots/";
+    // Prevent object creation
+    private FrameworkConstants() {
+    }
 
-    // Config file path
-    public static final String CONFIG_PATH =
-            "test-data/config.properties";
+    // Screenshot folder
+    public static final String SCREENSHOT_PATH = "screenshots/";
 
 }

@@ -3,15 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="signUp.TC_02_040">
+      <class name="login.TC_01_024">
         <methods>
           <include name="tearDown"/>
+          <include name="verifyBrowserBackButtonAfterLogin"/>
           <include name="flushReport"/>
           <include name="setup"/>
-          <include name="verifyPendingUserCannotLogin"/>
           <include name="startReport"/>
         </methods>
-      </class> <!-- signUp.TC_02_040 -->
+      </class> <!-- login.TC_01_024 -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

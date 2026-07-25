@@ -6,11 +6,12 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_010 extends BaseTest {
 
-    @Test(description = "TC-01-010 : Verify login with very long email input")
+    @Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-01-010 : Verify login with very long email input")
     public void verifyLoginWithVeryLongEmailInput() {
 
         // Page Object Creation

@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_025 extends BaseTest {
 
-	@Test(description = "TC-02-025 : Verify Confirm Password field is masked by default")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-025 : Verify Confirm Password field is masked by default")
 	public void verifyConfirmPasswordFieldMaskedByDefault() {
 
 		LoginPage loginPage = new LoginPage(page);

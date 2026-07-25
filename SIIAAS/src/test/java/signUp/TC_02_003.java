@@ -7,85 +7,83 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
 import Pages.UserManagementPage;
-
 import utils.ConfigReader;
-import utils.DataProviders;
+import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_003 extends BaseTest {
 
-	@Test(dataProvider = "userRequestData", dataProviderClass = DataProviders.class, description = "TC-02-003 Verify signed up user appears in User Requests")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-003 Verify signed up user appears in User Requests")
 
-	public void verifyUserRequestAppearsAfterSignup(
-
-			String name, String email, String password, String confirmPassword, String designation, String department,
-			String location
-
-	) {
+	public void verifyUserRequestAppearsAfterSignup() {
 
 		LoginPage loginPage = new LoginPage(page);
 		SignupPage signupPage = new SignupPage(page);
+		UserManagementPage userManagementPage = new UserManagementPage(page);
 
-		test.info("TC-02-003 Execution Started");
+		LoggerUtil.info("========== TC-02-003 STARTED ==========");
 
-		/*
-		 * STEP 1 Open Signup
-		 */
+		String name = ConfigReader.getProperty("tc02003.name");
+		String email = ConfigReader.getProperty("tc02003.email");
+		String password = ConfigReader.getProperty("tc02003.password");
+		String confirmPassword = ConfigReader.getProperty("tc02003.confirmPassword");
+		String designation = ConfigReader.getProperty("tc02003.designation");
+		String department = ConfigReader.getProperty("tc02003.department");
+		String location = ConfigReader.getProperty("tc02003.location");
+
+		LoggerUtil.info("Opening Signup Page");
 
 		loginPage.clickSignupLink();
+		loginPage.attachStepScreenshot("Signup_Page_Opened");
 
-		/*
-		 * STEP 2 Signup User
-		 */
+		LoggerUtil.info("Entering Signup Details");
 
 		signupPage.signup(name, email, password, confirmPassword, designation, department, location);
 
-		Assert.assertTrue(signupPage.issignUpsuccessful(), "Signup failed");
+		loginPage.attachStepScreenshot("Signup_Details_Entered");
 
-		test.pass("User Signup Successful");
-		
+		LoggerUtil.info("Clicking Signup Button");
 
-		/*S
-		 * STEP 3 Login as Admin
-		 */
-		page.waitForSelector("//button[normalize-space()= 'Log in']");
+		signupPage.clickSignUpButton();
 
-		 // till login click button
+		loginPage.attachStepScreenshot("Signup_Button_Clicked");
+
+		Assert.assertTrue(signupPage.isApprovalMessageDisplayed(), "Signup failed");
+
+		LoggerUtil.info("Signup completed successfully");
+
+		loginPage.attachStepScreenshot("Signup_Successful");
+
+		LoggerUtil.info("Logging in as Admin");
+
 		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 
-		page.waitForLoadState();
+		loginPage.attachStepScreenshot("Admin_Login");
 
-		test.pass("Admin Login Successful");
-
-		/*
-		 * STEP 4 Open User Requests
-		 */
-
-		UserManagementPage userManagementPage = new UserManagementPage(page);
+		LoggerUtil.info("Opening User Management");
 
 		userManagementPage.openUserManagement();
 
 		userManagementPage.openUserRequestsTab();
 
-		test.info("Opened User Requests");
+		loginPage.attachStepScreenshot("User_Requests_Page");
 
-		/*
-		 * STEP 5 Verify User Exists
-		 */
+		LoggerUtil.info("Verifying User Request");
 
 		Assert.assertTrue(userManagementPage.isUserPresent(email), "User request not found");
 
-		/*
-		 * STEP 6 Verify Approve Button
-		 */
+		loginPage.attachStepScreenshot("User_Request_Found");
+
+		LoggerUtil.info("Verifying Approve Button");
 
 		Assert.assertTrue(userManagementPage.isApproveButtonVisible(email), "Approve button missing");
 
-		/*
-		 * STEP 7 Verify Reject Button
-		 */
+		LoggerUtil.info("Verifying Reject Button");
 
 		Assert.assertTrue(userManagementPage.isRejectButtonVisible(email), "Reject button missing");
 
-		test.pass("User Request Found Successfully with Approve/Reject Actions");
+		loginPage.attachStepScreenshot("Approve_Reject_Buttons");
+
+		LoggerUtil.info("========== TC-02-003 PASSED ==========");
 	}
 }

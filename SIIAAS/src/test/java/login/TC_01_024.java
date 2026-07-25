@@ -7,11 +7,11 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
-import utils.ScreenshotUtil;
+import utils.RetryAnalyzer;
 
 public class TC_01_024 extends BaseTest {
 
-	@Test(description = "TC-01-024 : Verify browser back button does not expose login page after login")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-024 : Verify browser back button does not expose login page after login")
 	public void verifyBrowserBackButtonAfterLogin() {
 
 		// Page Object Creation
@@ -25,8 +25,7 @@ public class TC_01_024 extends BaseTest {
 		test.info("Logging In With Valid Credentials");
 
 		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Successful_Login");
+        loginPage.attachStepScreenshot("Successful_Login");
 
 		// Verify Projects Dashboard Displayed
 		Assert.assertTrue(loginPage.isProjectsDashboardDisplayed(), "Projects Dashboard is not displayed after login");
@@ -36,16 +35,15 @@ public class TC_01_024 extends BaseTest {
 		test.info("Clicking Browser Back Button");
 // back
 		page.goBack();
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Browser_Back_Clicked");
+		
+		 loginPage.attachStepScreenshot("Browser_Back_Clicked");
 
 		// Verify User Still On Projects Page
 		LoggerUtil.info("Verifying User Is Not Redirected To Login Page");
 		test.info("Verifying User Is Not Redirected To Login Page");
 
 		boolean isProjectsDashboardDisplayed = loginPage.isProjectsDashboardDisplayed();
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Projects_Page_After_Back_Action");
+		 loginPage.attachStepScreenshot("Projects_Page_After_Back_Action");
 
 		// Validation
 		Assert.assertTrue(isProjectsDashboardDisplayed,

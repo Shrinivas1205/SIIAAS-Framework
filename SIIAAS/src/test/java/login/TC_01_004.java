@@ -7,11 +7,12 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_004 extends BaseTest {
 
-    @Test(description = "TC-01-004 :Verify login attempt by non-approved user")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-004 :Verify login attempt by non-approved user")
     public void verifyNonApprovedUserLogin() {
 
         /*

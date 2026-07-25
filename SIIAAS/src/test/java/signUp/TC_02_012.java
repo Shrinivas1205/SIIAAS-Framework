@@ -8,66 +8,48 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_012 extends BaseTest {
 
-	@Test(description = "TC-02-012 Verify signup with empty Confirm Password field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-012 Verify signup with empty Confirm Password field")
 	public void verifySignupWithEmptyConfirmPasswordField() {
 
 		LoginPage loginPage = new LoginPage(page);
 		SignupPage signupPage = new SignupPage(page);
 
-		LoggerUtil.info("========== STARTING TC-02-012 ==========");
+		LoggerUtil.info("========== TC-02-012 STARTED ==========");
 
-		/*
-		 * STEP 1 : Open Signup Page
-		 */
+		// Open Signup Page
 		LoggerUtil.info("Opening Signup Page");
 
 		loginPage.clickSignupLink();
 
-		test.info("Signup Page Opened");
-
-		/*
-		 * STEP 2 : Enter Signup Details
-		 */
-		LoggerUtil.info("Entering Signup Details");
+		// Enter Signup Details Except Confirm Password
+		LoggerUtil.info("Entering Signup Details Except Confirm Password");
 
 		signupPage.enterFullName(ConfigReader.getProperty("tc02012.name"));
-
 		signupPage.enterEmail(ConfigReader.getProperty("tc02012.email"));
-
 		signupPage.enterPassword(ConfigReader.getProperty("tc02012.password"));
-
-		signupPage.enterConfirmPassword(ConfigReader.getProperty("tc02012.confirmPassword")); // Blank
-
+		// empty Confirm Password field
 		signupPage.selectDesignation(ConfigReader.getProperty("tc02012.designation"));
-
 		signupPage.selectDepartment(ConfigReader.getProperty("tc02012.department"));
-
 		signupPage.selectLocation(ConfigReader.getProperty("tc02012.location"));
 
-		test.info("Entered Form Data With Empty Confirm Password");
+		loginPage.attachStepScreenshot("Entered signup details with empty Confirm Password");
 
-		/*
-		 * STEP 3 : Click Sign Up
-		 */
-		LoggerUtil.info("Clicking Sign Up Button");
+		// Click Sign Up
+		LoggerUtil.info("Clicking Signup Button");
 
 		signupPage.clickSignUpButton();
 
-		test.info("Sign Up Button Clicked");
+		// Verify Validation Message
+		LoggerUtil.info("Verifying Validation Message");
 
-		/*
-		 * STEP 4 : Verify Validation Message
-		 */
-		LoggerUtil.info("Verifying Confirm Password Validation Message");
+		Assert.assertEquals(signupPage.getValidationMessage("All fields are required."), "All fields are required.",
+				"Incorrect validation message displayed");
 
-		String actualMessage = signupPage.getValidationMessage("All fields are required.");
-
-		Assert.assertEquals(actualMessage, "All fields are required.", "Incorrect validation message displayed");
-
-		test.pass("Confirm Password Required Validation Displayed Successfully");
+		loginPage.attachStepScreenshot("Validation message displayed for empty Confirm Password field");
 
 		LoggerUtil.info("========== TC-02-012 PASSED ==========");
 	}

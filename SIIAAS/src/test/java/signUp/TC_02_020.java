@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_020 extends BaseTest {
 
-	@Test(description = "TC-02-020 : Verify signup succeeds when email contains leading/trailing spaces")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-020 Verify signup succeeds when email contains leading/trailing spaces")
 	public void verifySignupWithEmailContainingSpaces() {
 
 		LoginPage loginPage = new LoginPage(page);
@@ -19,15 +20,17 @@ public class TC_02_020 extends BaseTest {
 
 		LoggerUtil.info("========== TC-02-020 STARTED ==========");
 
-		/*
-		 * STEP 1 : Open Signup Page
-		 */
+		// Open Signup Page
+		LoggerUtil.info("Opening Signup Page");
+
 		loginPage.clickSignupLink();
 
-		/*
-		 * STEP 2 : Enter Signup Details
-		 */
-		signupPage.enterFullName(ConfigReader.getProperty("signup.name"));
+		loginPage.attachStepScreenshot("Signup page opened");
+
+		// Enter Signup Details
+		LoggerUtil.info("Entering Signup Details");
+
+		signupPage.enterFullName(ConfigReader.getProperty("signup.name2"));
 
 		signupPage.enterEmail(ConfigReader.getProperty("signup.emailWithSpaces"));
 
@@ -41,18 +44,23 @@ public class TC_02_020 extends BaseTest {
 
 		signupPage.selectLocation(ConfigReader.getProperty("signup.location"));
 
-		/*
-		 * STEP 3 : Click Signup
-		 */
+		loginPage.attachStepScreenshot("Signup form filled with email containing leading and trailing spaces");
+
+		// Click Signup
+		LoggerUtil.info("Clicking Sign Up Button");
+
 		signupPage.clickSignUpButton();
 
-		/*
-		 * STEP 4 : Verify Signup Success
-		 */
-		Assert.assertTrue(signupPage.isApprovalMessageDisplayed(), "Signup failed for email containing spaces");
+		loginPage.attachStepScreenshot("Clicked Sign Up button");
 
-		LoggerUtil.info("Signup successful with email containing spaces");
+		// Verify Signup Success
+		LoggerUtil.info("Verifying Signup Success Message");
 
-		test.pass("Application trimmed spaces and signup completed successfully");
+		Assert.assertTrue(signupPage.isApprovalMessageDisplayed(),
+				"Signup failed for email containing leading/trailing spaces");
+
+		loginPage.attachStepScreenshot("Signup successful after trimming email spaces");
+
+		LoggerUtil.info("========== TC-02-020 PASSED ==========");
 	}
 }

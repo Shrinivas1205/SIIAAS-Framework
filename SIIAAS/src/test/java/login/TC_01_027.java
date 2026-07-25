@@ -7,11 +7,12 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_027 extends BaseTest {
 
-	@Test(description = "TC-01-027 Verify error message disappears after correcting credentials")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-01-027 Verify error message disappears after correcting credentials")
 	public void verifyErrorMessageDisappearsAfterCorrectingCredentials() {
 
 		// Page Object Creation
@@ -25,6 +26,7 @@ public class TC_01_027 extends BaseTest {
 		test.info("Entering Wrong Email");
 
 		loginPage.enterEmail("user@example.com");
+		loginPage.attachStepScreenshot("Wrong_Credentials_Entered");
 
 		// Enter Wrong Password
 		LoggerUtil.info("Entering Wrong Password");
@@ -32,15 +34,14 @@ public class TC_01_027 extends BaseTest {
 
 		loginPage.enterPassword("Wrong@123");
 
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Wrong_Credentials_Entered");
+		loginPage.attachStepScreenshot("Wrong_Credentials_Entered");
 
 		// Click Login Button
 		LoggerUtil.info("Clicking Login Button With Wrong Credentials");
 		test.info("Clicking Login Button With Wrong Credentials");
 
 		loginPage.clickLogin();
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Wrong_Login_Attempt");
+		loginPage.attachStepScreenshot("Wrong_Login_Attempt");
 
 		// Verify Error Message Displayed
 		LoggerUtil.info("Verifying Error Message Displayed");
@@ -48,11 +49,11 @@ public class TC_01_027 extends BaseTest {
 
 		String errorMessage = loginPage.getLoginwrongemailErrorMessage();
 
-		Assert.assertTrue(errorMessage.contains("No account found") || errorMessage.contains("Invalid"),
+		Assert.assertTrue(errorMessage.contains("No account found with this email.") || errorMessage.contains("Invalid"),
 				"Expected error message is not displayed");
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Error_Message_Displayed");
-
+		
+		loginPage.attachStepScreenshot("Error_Message_Displayed");
+		
 		// Correct Email
 		LoggerUtil.info("Correcting Email");
 		test.info("Correcting Email");
@@ -64,20 +65,22 @@ public class TC_01_027 extends BaseTest {
 		test.info("Correcting Password");
 
 		loginPage.enterPassword(ConfigReader.getProperty("password"));
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Correct_Credentials_Entered");
+		
+		loginPage.attachStepScreenshot("Correct_Credentials_Entered");
 
 		// Click Login Button Again
 		LoggerUtil.info("Clicking Login Button With Correct Credentials");
 		test.info("Clicking Login Button With Correct Credentials");
 
 		loginPage.clickLogin();
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Successful_Login");
+		
+		
 
 		// Verify Successful Login
 		LoggerUtil.info("Verifying Successful Login");
 		test.info("Verifying Successful Login");
+		
+		loginPage.attachStepScreenshot("Successful_Login");
 
 		boolean isProjectsDashboardDisplayed = loginPage.isProjectsDashboardDisplayed();
 

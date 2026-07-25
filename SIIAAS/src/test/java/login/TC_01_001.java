@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 
 import BaseClass.BaseTest;
 import Pages.LoginPage;
@@ -23,9 +24,7 @@ import utils.ScreenshotUtil;
 
 public class TC_01_001 extends BaseTest {
 
-	@Test(
-			description = "TC-01-001 : Verify valid login with approved user credentials"
-	)
+	@Test(description = "TC-01-001 : Verify valid login with approved user credentials")
 	public void verifyValidLogin() {
 
 		/*
@@ -40,34 +39,11 @@ public class TC_01_001 extends BaseTest {
 		 */
 		LoginPage loginPage = new LoginPage(page);
 
-        // till login click button
+		// till login click button
 		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
-		
-		
-		page.waitForLoadState();
+		page.waitForLoadState(LoadState.LOAD);
 
-		/*
-		 * Screenshot after login
-		 */
-		String loginShot = ScreenshotUtil.captureScreenshot(
-
-				page,
-
-				"TC_01_001_After_Login"
-
-		);
-
-		try {
-
-			test.addScreenCaptureFromPath(loginShot);
-
-		}
-
-		catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
+	
 		/*
 		 * Step 4: Verify User Landed on Projects Dashboard
 		 */
@@ -75,38 +51,20 @@ public class TC_01_001 extends BaseTest {
 
 		test.info("Verifying Projects Dashboard");
 
-		boolean isDashboardVisible = page.locator("//span[normalize-space()= \"Projects\"]").isVisible();
-
 		/*
 		 * Dashboard Screenshot
 		 */
-		String dashboardShot = ScreenshotUtil.captureScreenshot(
+		LoggerUtil.info("User Landed on dashboard");
 
-				page,
-
-				"TC_01_001_Dashboard"
-
-		);
-
-		try {
-
-			test.addScreenCaptureFromPath(dashboardShot);
-
-		}
-
-		catch (Exception e) {
-
-			e.printStackTrace();
-		}
+		test.info("User Landed on dashboard");
 
 		/*
 		 * Assertion
 		 */
 		Assert.assertTrue(
+				loginPage.isProjectsDashboardDisplayed(),
 
-				isDashboardVisible,
-
-				"User NOT landed on Projects Dashboard"
+				"User landed on Projects Dashboard"
 
 		);
 

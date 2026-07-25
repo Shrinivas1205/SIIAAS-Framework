@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_031 extends BaseTest {
 
-	@Test(description = "TC-02-031 Verify signup with special characters in Name")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-031 Verify signup with special characters in Name")
 	public void verifySignupWithSpecialCharactersInName() {
 
 		LoginPage loginPage = new LoginPage(page);
@@ -57,8 +58,7 @@ public class TC_02_031 extends BaseTest {
 		 */
 		String actualMessage = signupPage.getValidationMessage("Enter a valid username.");
 
-		Assert.assertEquals(actualMessage, "Enter a valid username.",
-				"Incorrect validation message displayed");
+		Assert.assertEquals(actualMessage, "Enter a valid username.", "Incorrect validation message displayed");
 
 		test.pass("Correct validation message displayed");
 

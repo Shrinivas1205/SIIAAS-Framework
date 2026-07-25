@@ -7,55 +7,36 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_006 extends BaseTest {
 
-    @Test(
-        description = "TC-02-006 Verify approved user can log in successfully"
-    )
-    public void verifyApprovedUserCanLoginSuccessfully() {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-006 Verify approved user can log in successfully")
+	public void verifyApprovedUserCanLoginSuccessfully() {
 
-        LoginPage loginPage = new LoginPage(page);
+		LoginPage loginPage = new LoginPage(page);
 
-        LoggerUtil.info("========== TC-02-006 STARTED ==========");
+		LoggerUtil.info("========== TC-02-006 STARTED ==========");
 
-        test.info("TC-02-006 Execution Started");
+		// Login with Approved User
+		LoggerUtil.info("Entering Approved User Credentials");
 
-        /*
-         * STEP 1
-         * Login with approved user
-         */
+		loginPage.login(ConfigReader.getProperty("approvedUserEmail"),
+				ConfigReader.getProperty("approvedUserPassword"));
 
-        LoggerUtil.info("Entering Approved User Credentials");
+		LoggerUtil.info("Approved User Clicked Login Button");
 
-        loginPage.login(
+		page.waitForLoadState();
 
-                ConfigReader.getProperty("approvedUserEmail"),
-                ConfigReader.getProperty("approvedUserPassword")
+		loginPage.attachStepScreenshot("Approved User logged in");
 
-        );
+		// Verify Dashboard
+		LoggerUtil.info("Verifying Projects Dashboard");
 
-        page.waitForLoadState();
+		Assert.assertTrue(loginPage.isProjectsDashboardDisplayed(), "Projects Dashboard Not Displayed");
 
-        test.info("Approved User Login Attempted");
+		loginPage.attachStepScreenshot("Projects Dashboard displayed successfully");
 
-        /*
-         * STEP 2
-         * Verify Dashboard
-         */
-
-        LoggerUtil.info("Verifying Projects Dashboard");
-
-        Assert.assertTrue(
-
-                loginPage.isProjectsDashboardDisplayed(),
-
-                "Projects Dashboard Not Displayed"
-
-        );
-
-        test.pass("Approved User Logged In Successfully");
-
-        LoggerUtil.info("========== TC-02-006 PASSED ==========");
-    }
+		LoggerUtil.info("========== TC-02-006 PASSED ==========");
+	}
 }

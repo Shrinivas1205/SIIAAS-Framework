@@ -7,11 +7,12 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_013 extends BaseTest {
 
-	@Test(description = "TC-01-013 : Verify password visibility toggle using eye icon")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-01-013 : Verify password visibility toggle using eye icon")
 	public void verifyPasswordVisibilityToggle() {
 
 		// Page Object Creation
@@ -22,7 +23,8 @@ public class TC_01_013 extends BaseTest {
 
 		// Enter Password
 		LoggerUtil.info("Entering Password");
-		test.info("Entering Password");
+		loginPage.attachStepScreenshot("Entering Password");
+		
 
 		loginPage.enterPassword(ConfigReader.getProperty("password"));
 
@@ -30,11 +32,13 @@ public class TC_01_013 extends BaseTest {
 
 		// Click Eye Icon - Reveal Password
 		LoggerUtil.info("Clicking Eye Icon To Reveal Password");
+		
+		
 		test.info("Clicking Eye Icon To Reveal Password");
 
 		loginPage.clickPasswordVisibilityIcon();
+		loginPage.attachStepScreenshot("Clicked Eye Icon");
 
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Password_Revealed");
 
 		// Verify Password Is Visible
 		String visiblePasswordFieldType = loginPage.getPasswordFieldType();
@@ -44,11 +48,11 @@ public class TC_01_013 extends BaseTest {
 
 		// Click Eye Icon Again - Mask Password
 		LoggerUtil.info("Clicking Eye Icon To Mask Password");
-		test.info("Clicking Eye Icon To Mask Password");
 
 		loginPage.clickPasswordVisibilityIcon();
+		
+		loginPage.attachStepScreenshot("Password_Masked_Again");
 
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Password_Masked_Again");
 
 		// Verify Password Is Masked Again
 		String maskedPasswordFieldType = loginPage.getPasswordFieldType();

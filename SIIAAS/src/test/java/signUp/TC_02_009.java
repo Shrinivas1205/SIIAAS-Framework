@@ -2,14 +2,17 @@ package signUp;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
+import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_009 extends BaseTest {
 
-	@Test(description = "TC-02-009 Verify Signup With Empty Name Field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-009 Verify Signup With Empty Name Field")
 	public void verifySignupWithEmptyNameField() {
 
 		LoginPage loginPage = new LoginPage(page);
@@ -17,57 +20,37 @@ public class TC_02_009 extends BaseTest {
 
 		LoggerUtil.info("========== TC-02-009 STARTED ==========");
 
-		test.info("TC-02-009 Execution Started");
-
-		/*
-		 * STEP 1 Open Signup Page
-		 */
+		// Open Signup Page
+		LoggerUtil.info("Opening Signup Page");
 
 		loginPage.clickSignupLink();
 
-		test.info("Signup Page Opened");
+		// Fill all fields except Name
+		LoggerUtil.info("Entering Signup Details Except Name");
 
-		/*
-		 * STEP 2 Leave Name Blank
-		 */
+		signupPage.enterEmail(ConfigReader.getProperty("signup.email"));
+		signupPage.enterPassword(ConfigReader.getProperty("signup.password"));
+		signupPage.enterConfirmPassword(ConfigReader.getProperty("signup.confirmPassword"));
+		signupPage.selectDesignation(ConfigReader.getProperty("signup.designation"));
+		signupPage.selectDepartment(ConfigReader.getProperty("signup.department"));
+		signupPage.selectLocation(ConfigReader.getProperty("signup.location"));
 
-		signupPage.enterEmail("testuser@test.com");
+		loginPage.attachStepScreenshot("Entered all signup details except Name");
 
-		signupPage.enterPassword("Pass@123");
-
-		signupPage.enterConfirmPassword("Pass@123");
-
-		signupPage.selectDesignation("QA Engineer");
-
-		signupPage.selectDepartment("Testing");
-
-		signupPage.selectLocation("Hyderabad");
-
-		test.info("All Fields Filled Except Name");
-
-		/*
-		 * STEP 3 Click Sign Up
-		 */
+		// Click Sign Up
+		LoggerUtil.info("Clicking Signup Button");
 
 		signupPage.clickSignUpButton();
 
-		test.info("Clicked Sign Up");
-
-		/*
-		 * STEP 4 Verify Validation Message
-		 */
+		// Verify Validation Message
+		LoggerUtil.info("Verifying Validation Message");
 
 		Assert.assertEquals(
-
 				signupPage.getValidationMessage("All fields are required."),
-
 				"All fields are required.",
+				"Incorrect Validation Message");
 
-				"Incorrect Validation Message"
-
-		);
-
-		test.pass("Name Required Validation Displayed Successfully");
+		loginPage.attachStepScreenshot("Validation message displayed for empty Name field");
 
 		LoggerUtil.info("========== TC-02-009 PASSED ==========");
 	}

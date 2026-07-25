@@ -1,18 +1,22 @@
 package login;
 
+import org.openqa.selenium.bidi.browsingcontext.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.microsoft.playwright.Locator.WaitForOptions;
 
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_006 extends BaseTest {
 
-	@Test(description = "TC-01-006 : Verify login with empty password field")
-	public void verifyLoginWithEmptyPasswordField() {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-01-006 : Verify login with empty password field")
+	public void verifyLoginWithEmptyPasswordField() throws InterruptedException {
 
 		/*
 		 * Page Object Creation
@@ -51,8 +55,9 @@ public class TC_01_006 extends BaseTest {
 		test.info("Clicking Login Button");
 
 		loginPage.clickLogin();
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Login_Button_Clicked");
+		
+		Thread.sleep(2000);
+		
 
 		/*
 		 * Verify Validation Message
@@ -62,13 +67,15 @@ public class TC_01_006 extends BaseTest {
 		test.info("Verifying Password Required Validation Message");
 
 		String actualMessage = loginPage.getPasswordRequiredValidationMessage();
+		
+		test.info("Password Required Validation Message verified");
 
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Password_Required_Validation_Displayed");
 
 		/*
 		 * Validation
 		 */
-		Assert.assertEquals(actualMessage, "Email and password are required.", "Incorrect validation message displayed");
+		Assert.assertEquals(actualMessage, "Email and password are required.",
+				"Incorrect validation message displayed");
 
 		LoggerUtil.info("TC-01-006 PASSED");
 

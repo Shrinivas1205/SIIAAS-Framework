@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_033 extends BaseTest {
 
-    @Test(description = "TC-02-033 Verify signup with numeric-only Name")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-033 Verify signup with numeric-only Name")
     public void verifySignupWithNumericOnlyName() {
 
         LoginPage loginPage = new LoginPage(page);

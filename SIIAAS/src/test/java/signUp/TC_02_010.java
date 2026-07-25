@@ -34,8 +34,7 @@ public class TC_02_010 extends BaseTest {
         signupPage.enterFullName(
                 ConfigReader.getProperty("signup.name"));
 
-        signupPage.enterEmail(
-                ConfigReader.getProperty("signup.email")); // blank
+        // Email blank
 
         signupPage.enterPassword(
                 ConfigReader.getProperty("signup.password"));

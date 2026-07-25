@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 /*
@@ -16,96 +17,71 @@ import utils.ScreenshotUtil;
 
 public class TC_01_003 extends BaseTest {
 
-    @Test(description = " TC-01-003 :Verify login with unregistered email")
-    public void verifyUnregisteredEmailLogin() {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = " TC-01-003 :Verify login with unregistered email")
+	public void verifyUnregisteredEmailLogin() {
 
-        LoggerUtil.info("========== STARTING TC-01-003 ==========");
+		LoggerUtil.info("========== STARTING TC-01-003 ==========");
 
-        /*
-         * Create Login Page object
-         */
-        LoginPage loginPage = new LoginPage(page);
+		/*
+		 * Create Login Page object
+		 */
+		LoginPage loginPage = new LoginPage(page);
 
-        /*
-         * Enter Unregistered Email
-         */
-        LoggerUtil.info("Entering Unregistered Email");
+		/*
+		 * Enter Unregistered Email
+		 */
+		LoggerUtil.info("Entering Unregistered Email");
 
-        test.info("Entering Unregistered Email");
+		test.info("Entering Unregistered Email");
 
-        loginPage.enterEmail("notexist@example.com");
+		loginPage.enterEmail("notexist@example.com");
 
-        ScreenshotUtil.captureAndAttachScreenshot( page, test, "Unregistered_Email_Entered");
+		/*
+		 * Enter Password
+		 */
+		LoggerUtil.info("Entering Password");
 
-        /*
-         * Enter Password
-         */
-        LoggerUtil.info("Entering Password");
+		test.info("Entering Password");
 
-        test.info("Entering Password");
+		loginPage.enterPassword("Pass@123");
 
-        loginPage.enterPassword("Pass@123");
+		/*
+		 * Click Login Button
+		 */
+		LoggerUtil.info("Clicking Login Button");
 
-        ScreenshotUtil.captureAndAttachScreenshot(
+		test.info("Clicking Login Button");
 
-                page, test, "Password_Entered"
-        );
+		loginPage.clickLogin();
 
-        /*
-         * Click Login Button
-         */
-        LoggerUtil.info("Clicking Login Button");
+		/*
+		 * Wait for error message
+		 * 
+		 * page.waitForTimeout(3000);
+		 */
 
-        test.info("Clicking Login Button");
+		/*
+		 * Get Error Message
+		 */
+		LoggerUtil.info("Verifying Error Message");
 
-        loginPage.clickLogin();
+		test.info("Verifying Error Message");
 
-        ScreenshotUtil.captureAndAttachScreenshot(
+		String actualError = loginPage.getLoginwrongemailErrorMessage();
 
-                page,
+		System.out.println("Actual Error Message: " + actualError);
 
-                test,
 
-                "Login_Button_Clicked"
+		/*
+		 * Validate Error Message
+		 */
+		Assert.assertTrue(
 
-        );
+				actualError.contains("No account found with this email.") || actualError.contains("not found"),
+				"Expected error message NOT displayed");
 
-        /*
-         * Wait for error message
-         */
-        page.waitForTimeout(3000);
+		LoggerUtil.info("========== TC-01-003 PASSED ==========");
 
-        /*
-         * Get Error Message
-         */
-        LoggerUtil.info("Verifying Error Message");
-
-        test.info("Verifying Error Message");
-
-        String actualError =
-                loginPage.getLoginwrongemailErrorMessage(); 
-
-        System.out.println("Actual Error Message: " + actualError);
-
-        ScreenshotUtil.captureAndAttachScreenshot(
-
-                page,
-
-                test,
-
-                "Error_Message_Displayed"
-
-        );
-
-        /*
-         * Validate Error Message
-         */
-        Assert.assertTrue(
-
-                actualError.contains("No account found with this email.") || actualError.contains("not found"), "Expected error message NOT displayed" );
-
-        LoggerUtil.info("========== TC-01-003 PASSED ==========");
-
-        test.pass("Proper error message displayed for unregistered email");
-    }
+		test.pass("Proper error message displayed for unregistered email");
+	}
 }

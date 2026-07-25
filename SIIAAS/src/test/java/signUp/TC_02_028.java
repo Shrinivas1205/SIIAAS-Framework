@@ -7,10 +7,11 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_028 extends BaseTest {
 
-	@Test(description = "TC-02-028 Verify Sign Up button is visible and clickable")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-028 Verify Sign Up button is visible and clickable")
 	public void verifySignUpButtonVisibleAndClickable() {
 
 		LoginPage loginPage = new LoginPage(page);

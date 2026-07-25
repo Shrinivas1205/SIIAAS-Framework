@@ -7,11 +7,11 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
-import utils.ScreenshotUtil;
+import utils.RetryAnalyzer;
 
 public class TC_01_012 extends BaseTest {
 
-	@Test(description = "TC-01-012 : Verify password is masked by default")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-012 : Verify password is masked by default")
 	public void verifyPasswordIsMaskedByDefault() {
 
 		// Page Object Creation
@@ -25,16 +25,16 @@ public class TC_01_012 extends BaseTest {
 		test.info("Entering Password");
 
 		loginPage.enterPassword(ConfigReader.getProperty("password"));
-
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Password_Entered");
+		loginPage.attachStepScreenshot("Password_Entered");
 
 		// Verify Password Is Masked
 		LoggerUtil.info("Verifying Password Is Masked");
 		test.info("Verifying Password Is Masked");
 
 		Assert.assertTrue(loginPage.isPasswordMasked(), "Password field is not masked");
+		
+		loginPage.attachStepScreenshot("Password_Masked");
 
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Password_Masked");
 
 		LoggerUtil.info("TC-01-012 PASSED");
 		test.pass("Password field is masked successfully");

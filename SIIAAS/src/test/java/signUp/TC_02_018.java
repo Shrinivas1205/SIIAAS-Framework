@@ -8,71 +8,61 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_018 extends BaseTest {
 
-    @Test(description = "TC-02-018 : Verify signup with invalid email without @ symbol")
-    public void verifySignupWithInvalidEmailWithoutAtSymbol() {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-018 Verify signup with invalid email without @ symbol")
+	public void verifySignupWithInvalidEmailWithoutAtSymbol() {
 
-        LoginPage loginPage = new LoginPage(page);
-        SignupPage signupPage = new SignupPage(page);
+		LoginPage loginPage = new LoginPage(page);
+		SignupPage signupPage = new SignupPage(page);
 
-        test.info("TC-02-018 Execution Started");
+		LoggerUtil.info("========== TC-02-018 STARTED ==========");
 
-        /*
-         * STEP 1 : Open Signup Page
-         */
-        LoggerUtil.info("Opening Signup Page");
+		// STEP 1 : Open Signup Page
+		LoggerUtil.info("Opening Signup Page");
 
-        loginPage.clickSignupLink();
+		loginPage.clickSignupLink();
 
-        /*
-         * STEP 2 : Fill Signup Form
-         */
-        LoggerUtil.info("Entering Signup Details");
+		loginPage.attachStepScreenshot("Signup page opened");
 
-        signupPage.enterFullName(
-                ConfigReader.getProperty("signup.name"));
+		// STEP 2 : Fill Signup Form
+		LoggerUtil.info("Entering Signup Details");
 
-        signupPage.enterEmail(
-                ConfigReader.getProperty("signup.invalidEmailWithoutAt"));
+		signupPage.enterFullName(ConfigReader.getProperty("signup.name"));
 
-        signupPage.enterPassword(
-                ConfigReader.getProperty("signup.password"));
+		signupPage.enterEmail(ConfigReader.getProperty("signup.invalidEmailWithoutAt"));
 
-        signupPage.enterConfirmPassword(
-                ConfigReader.getProperty("signup.confirmPassword"));
+		signupPage.enterPassword(ConfigReader.getProperty("signup.password"));
 
-        signupPage.selectDesignation(
-                ConfigReader.getProperty("signup.designation"));
+		signupPage.enterConfirmPassword(ConfigReader.getProperty("signup.confirmPassword"));
 
-        signupPage.selectDepartment(
-                ConfigReader.getProperty("signup.department"));
+		signupPage.selectDesignation(ConfigReader.getProperty("signup.designation"));
 
-        signupPage.selectLocation(
-                ConfigReader.getProperty("signup.location"));
+		signupPage.selectDepartment(ConfigReader.getProperty("signup.department"));
 
-        /*
-         * STEP 3 : Click Sign Up
-         */
-        LoggerUtil.info("Clicking Sign Up Button");
+		signupPage.selectLocation(ConfigReader.getProperty("signup.location"));
 
-        signupPage.clickSignUpButton();
+		loginPage.attachStepScreenshot("Entered signup details with invalid email");
 
-        /*
-         * STEP 4 : Verify Validation Message
-         */
-        String actualMessage =
-                signupPage.getValidationMessage("Please enter a valid email address.");
+		// STEP 3 : Click Sign Up
+		LoggerUtil.info("Clicking Sign Up Button");
 
-        LoggerUtil.info("Validation Message Displayed : " + actualMessage);
+		signupPage.clickSignUpButton();
 
-        Assert.assertEquals(
-                actualMessage,
-                "Please enter a valid email address.",
-                "Incorrect validation message displayed"
-        );
+		loginPage.attachStepScreenshot("Clicked Sign Up button");
 
-        test.pass("Invalid Email Without @ Validation Verified Successfully");
-    }
+		// STEP 4 : Verify Validation Message
+		LoggerUtil.info("Verifying Invalid Email Validation Message");
+
+		String actualMessage = signupPage.getValidationMessage("Please enter a valid email address.");
+
+		Assert.assertEquals(actualMessage, "Please enter a valid email address.",
+				"Incorrect validation message displayed");
+
+		loginPage.attachStepScreenshot("Invalid email validation message displayed");
+
+		LoggerUtil.info("========== TC-02-018 PASSED ==========");
+	}
 }

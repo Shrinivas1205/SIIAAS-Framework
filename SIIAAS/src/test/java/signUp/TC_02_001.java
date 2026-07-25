@@ -6,117 +6,51 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
-import utils.DataProviders;
-import utils.LoggerUtil;
-import utils.ScreenshotUtil;
+import utils.ConfigReader;
+import utils.RetryAnalyzer;
 
 public class TC_02_001 extends BaseTest {
 
-    @Test(
-        dataProvider = "Sheet1",
-        dataProviderClass = DataProviders.class,
-        description = "TC-02-001 : Successful signup with all valid inputs"
-    )
-    public void verifySuccessfulSignup(
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-001 Successful Signup")
 
-            String name,
-            String email,
-            String password,
-            String confirmPassword,
-            String designation,
-            String department,
-            String location
+	public void verifySuccessfulSignup() {
 
-    ) {
+		LoginPage loginPage = new LoginPage(page);
 
-        LoginPage loginPage = new LoginPage(page);
+		SignupPage signupPage = new SignupPage(page);
 
-        SignupPage signupPage = new SignupPage(page);
+		String name = ConfigReader.getProperty("tc02001.name");
+		System.out.println(name);
 
-        // =====================================================
-        // TC START
-        // =====================================================
+		String email = ConfigReader.getProperty("tc02001.email");
 
-        LoggerUtil.info("========== STARTING TC-02-001 ==========");
+		String password = ConfigReader.getProperty("tc02001.password");
 
-        test.info(
-                "TC-02-001 Execution Started | User : "
-                        + name
-        );
+		String confirmPassword = ConfigReader.getProperty("tc02001.confirmPassword");
 
-        // =====================================================
-        // STEP 1
-        // Open Signup Page
-        // =====================================================
+		String designation = ConfigReader.getProperty("tc02001.designation");
 
-        LoggerUtil.info("Opening Signup Page");
+		String department = ConfigReader.getProperty("tc02001.department");
 
-        loginPage.clickSignupLink();
+		String location = ConfigReader.getProperty("tc02001.location");
 
-        page.waitForLoadState();
+		loginPage.clickSignupLink();
 
-        page.waitForSelector(
-                "//button[normalize-space() ='Sign Up']"
-        );
+		signupPage.signup(
 
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Signup_Page_Opened"
-        );
+				name, email, password, confirmPassword, designation, department, location
 
-        // =====================================================
-        // STEP 2
-        // Fill Signup Form
-        // =====================================================
+		);
 
-        LoggerUtil.info(
-                "Entering Signup Details For : "
-                        + name
-        );
+		signupPage.clickSignUpButton();
 
-        signupPage.signup(
-                name,
-                email,
-                password,
-                confirmPassword,
-                designation,
-                department,
-                location
-        );
+		Assert.assertTrue(
 
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Signup_Form_Submitted"
-        );
+				signupPage.isApprovalMessageDisplayed(),
 
-        // =====================================================
-        // STEP 3
-        // Verify Signup Success
-        // =====================================================
+				"Signup failed."
 
-        LoggerUtil.info("Verifying Signup Success");
+		);
 
-        Assert.assertTrue(
-                signupPage.isApprovalMessageDisplayed(),
-                "Signup failed for user : " + name
-        );
-
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Signup_Successful"
-        );
-
-        LoggerUtil.info(
-                "TC-02-001 PASSED FOR USER : "
-                        + name
-        );
-
-        test.pass(
-                "User successfully submitted signup request : "
-                        + name
-        );
-    }
+	}
 }

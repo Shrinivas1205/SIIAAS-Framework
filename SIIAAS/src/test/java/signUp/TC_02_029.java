@@ -7,10 +7,11 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_029 extends BaseTest {
 
-	@Test(description = "TC-02-029 Verify Login link navigates to Login Page")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-029 Verify Login link navigates to Login Page")
 	public void verifyLoginLinkNavigatesToLoginPage() {
 
 		LoginPage loginPage = new LoginPage(page);

@@ -7,39 +7,40 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_016 extends BaseTest {
 
-	@Test(description = "TC-02-016 : Verify signup with all fields empty")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-016 Verify signup with all fields empty")
 	public void verifySignupWithAllFieldsEmpty() {
 
 		LoginPage loginPage = new LoginPage(page);
 		SignupPage signupPage = new SignupPage(page);
 
-		test.info("TC-02-016 Execution Started");
+		LoggerUtil.info("========== TC-02-016 STARTED ==========");
 
-		/*
-		 * STEP 1 : Open Signup Page
-		 */
+		// Open Signup Page
 		LoggerUtil.info("Opening Signup Page");
 
 		loginPage.clickSignupLink();
 
-		/*
-		 * STEP 2 : Click Sign Up Without Entering Any Data
-		 */
-		LoggerUtil.info("Clicking Sign Up Without Entering Data");
+		loginPage.attachStepScreenshot("Signup page opened");
+
+		// Click Sign Up Without Entering Any Data
+		LoggerUtil.info("Clicking Sign Up Without Entering Any Data");
 
 		signupPage.clickSignUpButton();
 
-		/*
-		 * STEP 3 : Verify All Validation Messages
-		 */
+		loginPage.attachStepScreenshot("Clicked Sign Up with all fields empty");
 
-		Assert.assertEquals(signupPage.getValidationMessage("All fields are required."), "All fields are required.");
+		// Verify Validation Message
+		LoggerUtil.info("Verifying Validation Message");
 
-		LoggerUtil.info("All Mandatory Field Validations Displayed Successfully");
+		Assert.assertEquals(signupPage.getValidationMessage("All fields are required."), "All fields are required.",
+				"Incorrect validation message displayed");
 
-		test.pass("All Required Field Validations Verified Successfully");
+		loginPage.attachStepScreenshot("Validation message displayed for all mandatory fields");
+
+		LoggerUtil.info("========== TC-02-016 PASSED ==========");
 	}
 }

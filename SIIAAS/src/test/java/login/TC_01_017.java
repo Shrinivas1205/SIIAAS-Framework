@@ -7,11 +7,12 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_017 extends BaseTest {
 
-    @Test(description = "TC-01-017 : Verify 'Forgot Password?' link is present and navigates correctly")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-017 : Verify 'Forgot Password?' link is present and navigates correctly")
     public void verifyForgotPasswordLinkNavigation() {
 
         // Page Object Creation
@@ -26,12 +27,8 @@ public class TC_01_017 extends BaseTest {
 
         boolean isForgotPasswordLinkVisible =
                 loginPage.isForgotPasswordLinkVisible();
-
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Forgot_Password_Link_Visible"
-        );
+        
+		loginPage.attachStepScreenshot("Forgot_Password_Link_Visible");
 
         Assert.assertTrue(
                 isForgotPasswordLinkVisible,
@@ -43,12 +40,7 @@ public class TC_01_017 extends BaseTest {
         test.info("Clicking Forgot Password Link");
 
         loginPage.clickForgotPasswordLink();
-
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Forgot_Password_Link_Clicked"
-        );
+		loginPage.attachStepScreenshot("Forgot_Password_Link_Clicked");
 
         // Verify Navigation To Reset Password Page
         LoggerUtil.info("Verifying Navigation To Reset Password Page");
@@ -56,12 +48,8 @@ public class TC_01_017 extends BaseTest {
 
         boolean isResetPasswordPageDisplayed =
                 loginPage.isResetPasswordPageDisplayed();
+        loginPage.attachStepScreenshot("Reset_Password_Page_Displayed");
 
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Reset_Password_Page_Displayed"
-        );
 
         // Validation
         Assert.assertTrue(

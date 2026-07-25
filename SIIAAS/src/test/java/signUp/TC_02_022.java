@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_022 extends BaseTest {
 
-	@Test(description = "TC-02-022 : Verify signup with mismatched password and confirm password")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-022 : Verify signup with mismatched password and confirm password")
 	public void verifySignupWithMismatchedPasswords() {
 
 		LoginPage loginPage = new LoginPage(page);

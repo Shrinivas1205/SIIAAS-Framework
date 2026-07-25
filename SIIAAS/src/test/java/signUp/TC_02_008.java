@@ -10,102 +10,54 @@ import Pages.LoginPage;
 import Pages.UserManagementPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_008 extends BaseTest {
 
-	@Test(description = "TC-02-008 Verify approved user details visible under All Users tab")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-008 Verify approved user details visible under All Users tab")
 	public void verifyApprovedUserVisibleInAllUsers() {
 
 		LoginPage loginPage = new LoginPage(page);
-
 		UserManagementPage userManagementPage = new UserManagementPage(page);
 
 		LoggerUtil.info("========== TC-02-008 STARTED ==========");
 
-		test.info("TC-02-008 Execution Started");
+		// Login as Admin
+		LoggerUtil.info("Logging in as Admin");
 
-		/*
-		 * STEP 1 Login As Admin
-		 */
-
-		loginPage.login(
-
-				ConfigReader.getProperty("username"), ConfigReader.getProperty("password")
-
-		);
+		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 
 		page.waitForLoadState();
 
-		test.pass("Admin Login Successful");
+		loginPage.attachStepScreenshot("Admin logged in successfully");
 
-		/*
-		 * STEP 2 Open User Management
-		 */
+		// Open User Management
+		LoggerUtil.info("Opening User Management");
 
 		userManagementPage.openUserManagement();
 
-		/*
-		 * STEP 3 Open All Users Tab
-		 */
+		// Open All Users Tab
+		LoggerUtil.info("Opening All Users Tab");
 
 		userManagementPage.openAllUsersTab();
 
-		test.info("Opened All Users Tab");
+		loginPage.attachStepScreenshot("All Users tab opened");
 
-		/*
-		 * STEP 4 Verify User Email
-		 */
-		boolean c = page
-				.getByText(ConfigReader.getProperty("approvedUserEmail"), new Page.GetByTextOptions().setExact(true))
-				.isVisible();
-		if (c == true) {
-			System.out.println("user email is present in all user table");
-			LoggerUtil.info("user email is present in all user table");
-		} else {
-			System.out.println("user email is not present in all user table");
-			LoggerUtil.info("user email is not present in all user table");
-		}
+		// Verify Approved User Email
+		LoggerUtil.info("Verifying Approved User Email");
 
-		/*
-		 * Assert.assertTrue(
-		 * 
-		 * userManagementPage.isUserPresentInAllUsers1(
-		 * 
-		 * ConfigReader.getProperty("approvedUserEmail")),
-		 * 
-		 * "Approved User Not Found"
-		 * 
-		 * );
-		 */
+		Assert.assertTrue(page
+				.getByText(ConfigReader.getProperty("approvedUserEmail1"), new Page.GetByTextOptions().setExact(true))
+				.isVisible(), "Approved User Email Not Found");
 
-		/*
-		 * STEP 5 Verify User Name
-		 */
+		// Verify Approved User Name
+		LoggerUtil.info("Verifying Approved User Name");
 
-		boolean b = page
-				.getByText(ConfigReader.getProperty("approvedUserName"), new Page.GetByTextOptions().setExact(true))
-				.isVisible();
-		if (b == true) {
-			System.out.println("username is present in all user table");
-			LoggerUtil.info("username is present in all user table");
-		} else {
-			System.out.println("username is not present in all user table");
-			LoggerUtil.info("username is not present in all user table");
-		}
+		Assert.assertTrue(page
+				.getByText(ConfigReader.getProperty("approvedUserName1"), new Page.GetByTextOptions().setExact(true))
+				.isVisible(), "Approved User Name Not Found");
 
-		/*
-		 * Assert.assertTrue(
-		 * 
-		 * userManagementPage.isUserNameDisplayed(
-		 * 
-		 * ConfigReader.getProperty("approvedUserName")),
-		 * 
-		 * "User Name Not Displayed"
-		 * 
-		 * );
-		 */
-
-		test.pass("Approved User Details Displayed Successfully");
+		loginPage.attachStepScreenshot("Approved User details displayed in All Users");
 
 		LoggerUtil.info("========== TC-02-008 PASSED ==========");
 	}

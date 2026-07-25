@@ -7,11 +7,12 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_008 extends BaseTest {
 
-    @Test(description = "TC-01-008 : Verify login with invalid email format")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-008 : Verify login with invalid email format")
     public void verifyLoginWithInvalidEmailFormat() {
 
         // Page Object Creation

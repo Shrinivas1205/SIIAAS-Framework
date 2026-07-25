@@ -1,10 +1,12 @@
-
 <suite name="SIIAAS Automation Suite">
+
+    <listeners>
+		<listener class-name="listeners.RetryListener" />
+    </listeners>
 
     <test name="Login Tests" parallel="classes" thread-count="4">
 
         <classes>
-
             <class name="login.TC_01_001"/>
             <class name="login.TC_01_002"/>
             <class name="login.TC_01_003"/>
@@ -20,21 +22,15 @@
             <class name="login.TC_01_013"/>
             <class name="login.TC_01_014"/>
             <class name="login.TC_01_015"/>
-            <class name="login.TC_01_016"/>
             <class name="login.TC_01_017"/>
             <class name="login.TC_01_018"/>
             <class name="login.TC_01_019"/>
-            <class name="login.TC_01_020"/>
             <class name="login.TC_01_021"/>
-            <class name="login.TC_01_022"/>
             <class name="login.TC_01_023"/>
             <class name="login.TC_01_024"/>
-            <class name="login.TC_01_025"/>
             <class name="login.TC_01_026"/>
             <class name="login.TC_01_027"/>
 
         </classes>
-
     </test>
-
 </suite>

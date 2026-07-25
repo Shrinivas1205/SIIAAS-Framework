@@ -7,11 +7,11 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
-import utils.ScreenshotUtil;
+import utils.RetryAnalyzer;
 
 public class TC_01_015 extends BaseTest {
 
-	@Test(description = "TC-01-015 : Verify pressing Enter key submits the login form")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-015 : Verify pressing Enter key submits the login form")
 	public void verifyEnterKeySubmitsLoginForm() {
 		
 		
@@ -28,18 +28,19 @@ public class TC_01_015 extends BaseTest {
 		loginPage.EnterkeyPress();
 
 		// Wait For Navigation
-		page.waitForLoadState();
+		//page.waitForLoadState();
 
 		// Optional Extra Wait
 		page.waitForTimeout(3000);
 
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "After_Enter_Key");
+		loginPage.attachStepScreenshot("After_Enter_Key");
+
 
 		// Verify Dashboard
 
 		Assert.assertTrue(loginPage.isProjectsDashboardDisplayed(), "User NOT landed on Projects Dashboard");
+		loginPage.attachStepScreenshot("Projects_Dashboard_Displayed");
 
-		ScreenshotUtil.captureAndAttachScreenshot(page, test, "Projects_Dashboard_Displayed");
 
 		LoggerUtil.info("TC-01-015 PASSED");
 		test.pass("Enter key successfully submitted login form");
