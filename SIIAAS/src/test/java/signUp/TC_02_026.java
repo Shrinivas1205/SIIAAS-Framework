@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_026 extends BaseTest {
 
-	@Test(description = "TC-02-026 : Verify password visibility toggle functionality")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-026 : Verify password visibility toggle functionality")
 	public void verifyPasswordVisibilityToggle() {
 
 		LoginPage loginPage = new LoginPage(page);

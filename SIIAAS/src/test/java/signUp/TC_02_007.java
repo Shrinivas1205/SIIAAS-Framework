@@ -5,52 +5,45 @@ import org.testng.annotations.Test;
 
 import BaseClass.BaseTest;
 import Pages.LoginPage;
+import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_007 extends BaseTest {
 
-	@Test(description = "TC-02-007 Verify rejected user cannot log in")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-007 Verify rejected user cannot log in")
 	public void verifyRejectedUserCannotLogin() {
 
 		LoginPage loginPage = new LoginPage(page);
+		SignupPage signupPage = new SignupPage(page);
 
 		LoggerUtil.info("========== TC-02-007 STARTED ==========");
 
-		test.info("TC-02-007 Execution Started");
-
-		/*
-		 * STEP 1 Login using rejected user credentials
-		 */
-
+		// Login with Rejected User
 		LoggerUtil.info("Entering Rejected User Credentials");
 
-		loginPage.login(
+		loginPage.login(ConfigReader.getProperty("rejectedUserEmail"),
+				ConfigReader.getProperty("rejectedUserPassword"));
 
-				ConfigReader.getProperty("rejectedUserEmail"), ConfigReader.getProperty("rejectedUserPassword")
-
-		);
+		LoggerUtil.info("Clicked Login Button");
 
 		page.waitForLoadState();
 
-		test.info("Rejected User Login Attempted");
+		loginPage.attachStepScreenshot("Rejected User attempted to login");
 
-		/*
-		 * STEP 2 Verify Error Message
-		 */
+		// Verify Error Message
+		LoggerUtil.info("Verifying Rejected User Error Message");
 
-		String actualMessage = loginPage.getLoginwithunapprovedemailErrorMessage();
+		String actualMessage = signupPage.getLoginwithDenieduserErrorMessage();
 
 		Assert.assertTrue(
-
-				actualMessage.contains("rejected") || actualMessage.contains("not approved")
+				actualMessage.contains("rejected")
+						|| actualMessage.contains("Your permission request has been denied by the administrator.")
 						|| actualMessage.contains("Your permission request is still pending admin approval."),
+				"Expected rejection message not displayed");
 
-				"Expected rejection message not displayed"
-
-		);
-
-		test.pass("Rejected User Login Blocked Successfully");
+		loginPage.attachStepScreenshot("Rejected User login blocked successfully");
 
 		LoggerUtil.info("========== TC-02-007 PASSED ==========");
 	}

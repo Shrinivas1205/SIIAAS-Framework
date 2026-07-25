@@ -1,46 +1,95 @@
 package utils;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
-import constants.FrameworkConstants;
-
 /*
- * This class reads values from config.properties file.
+ * ============================================================
+ * ConfigReader
+ * ============================================================
+ * Purpose:
+ * Reads values from:
+ *
+ * 1. config.properties
+ * 2. locators.properties
+ *
+ * Both files must be placed inside:
+ *
+ * src/test/resources
+ *
+ * This implementation works with:
+ * ✔ Eclipse
+ * ✔ IntelliJ
+ * ✔ Maven
+ * ✔ Jenkins
+ * ✔ GitHub Actions
+ * ✔ Packaged JAR
+ * ============================================================
  */
 
-public class ConfigReader {
+public final class ConfigReader {
 
-	// Java Properties class object
-	static Properties prop;
+	private static final Properties configProperties = new Properties();
+	private static final Properties locatorProperties = new Properties();
 
-	/*
-	 * Static block executes only once when class loads.
-	 */
 	static {
 
 		try {
 
-			// Load config file
-			FileInputStream fis = new FileInputStream(FrameworkConstants.CONFIG_PATH);
+			// ==================================================
+			// Load config.properties
+			// ==================================================
 
-			prop = new Properties();
+			InputStream configStream = ConfigReader.class.getClassLoader().getResourceAsStream("config.properties");
 
-			// Read properties file
-			prop.load(fis);
+			if (configStream == null) {
 
-		} catch (IOException e) {
+				throw new RuntimeException("config.properties not found inside src/test/resources");
 
-			e.printStackTrace();
+			}
+
+			configProperties.load(configStream);
+
+			// ==================================================
+			// Load locators.properties
+			// ==================================================
+
+			InputStream locatorStream = ConfigReader.class.getClassLoader().getResourceAsStream("locators.properties");
+
+			if (locatorStream == null) {
+
+				throw new RuntimeException("locators.properties not found inside src/test/resources");
+
+			}
+
+			locatorProperties.load(locatorStream);
+
 		}
+
+		catch (Exception e) {
+
+			throw new RuntimeException("Failed to load properties files.", e);
+
+		}
+
 	}
 
-	/*
-	 * Generic method to fetch property value.
+	/**
+	 * Returns value from config.properties
 	 */
 	public static String getProperty(String key) {
 
-		return prop.getProperty(key);
+		return configProperties.getProperty(key);
+
 	}
+
+	/**
+	 * Returns XPath/CSS locator from locators.properties
+	 */
+	public static String getLocator(String key) {
+
+		return locatorProperties.getProperty(key);
+
+	}
+
 }

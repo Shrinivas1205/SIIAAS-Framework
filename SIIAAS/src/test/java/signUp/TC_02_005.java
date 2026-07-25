@@ -7,75 +7,63 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.UserManagementPage;
 import utils.ConfigReader;
+import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_005 extends BaseTest {
 
-	@Test(description = "TC-02-005 Verify Admin Rejects User Request")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-005 Verify Admin Rejects User Request")
 	public void verifyAdminRejectsUserRequest() {
+
+		LoginPage loginPage = new LoginPage(page);
+		UserManagementPage userPage = new UserManagementPage(page);
+
+		LoggerUtil.info("========== TC-02-005 STARTED ==========");
 
 		String email = ConfigReader.getProperty("rejecteduseremail");
 
-		LoginPage loginPage = new LoginPage(page);
+		// Login as Admin
+		LoggerUtil.info("Logging in as Admin");
 
-		UserManagementPage userPage = new UserManagementPage(page);
+		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 
-		test.info("TC-02-005 Execution Started");
+		loginPage.attachStepScreenshot("Admin_Login_Successful");
 
-		// =====================================================
-		// Login
-		// =====================================================
-
-		loginPage.login(
-
-				ConfigReader.getProperty("username"),
-
-				ConfigReader.getProperty("password")
-
-		);
-
-		test.pass("Admin Login Successful");
-
-		// =====================================================
-		// Open User Requests
-		// =====================================================
+		// Open User Management
+		LoggerUtil.info("Opening User Management");
 
 		userPage.openUserManagement();
 
+		loginPage.attachStepScreenshot("User_Management_Page");
+
+		// Open User Requests
+		LoggerUtil.info("Opening User Requests Tab");
+
 		userPage.openUserRequestsTab();
 
-		test.pass("User Requests Opened");
+		loginPage.attachStepScreenshot("User_Requests_Tab");
 
-		// =====================================================
-		// Verify Request Exists
-		// =====================================================
+		// Verify Pending User
+		LoggerUtil.info("Verifying Pending User Request");
 
-		Assert.assertTrue(
+		Assert.assertTrue(userPage.isUserPresent(email), "Pending User Request Not Found");
 
-				userPage.isUserPresent(email),
+		loginPage.attachStepScreenshot("Pending_User_Request_Found");
 
-				"Pending User Request Not Found"
-
-		);
-
-		test.pass("Pending User Request Found");
-
-		// =====================================================
 		// Reject User
-		// =====================================================
+		LoggerUtil.info("Rejecting User Request");
 
 		userPage.clickReject(email);
 
-		test.pass("Reject Button Clicked");
+		loginPage.attachStepScreenshot("Reject_Button_Clicked");
 
-		// =====================================================
 		// Verify Toast
-		// =====================================================
-
-		// Toast
+		LoggerUtil.info("Verifying Reject Toast Message");
 
 		Assert.assertTrue(userPage.isRejectToastDisplayed(), "Reject Toast Not Displayed");
 
-		test.pass("User Request Rejected");
+		loginPage.attachStepScreenshot("Reject_Toast_Displayed");
 
+		LoggerUtil.info("========== TC-02-005 PASSED ==========");
 	}
 }

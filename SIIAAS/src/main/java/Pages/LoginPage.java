@@ -18,6 +18,8 @@ public class LoginPage extends BaseTest {
 		this.page = page;
 	}
 
+	private String projectsTab = "//h2[normalize-space()= 'All Projects']";
+
 	// TC-01-001
 
 	/*
@@ -25,7 +27,7 @@ public class LoginPage extends BaseTest {
 	 */
 	public String emailField = "input[type='email']";
 
-	public String passwordField = "//input[@placeholder='Enter password']";
+	public String passwordField = "//input[@placeholder='Enter Password']";
 
 	public String loginButton = "button:has-text('Log In')";
 
@@ -76,6 +78,7 @@ public class LoginPage extends BaseTest {
 		// Press Enter Key
 		LoggerUtil.info("Pressing Enter Key");
 		page.keyboard().press("Enter");
+		attachStepScreenshot("Pressed Enter Key");
 		test.info("Pressed Enter Key");
 
 	}
@@ -87,17 +90,26 @@ public class LoginPage extends BaseTest {
 
 		String path = ScreenshotUtil.captureScreenshot(page, stepName);
 
+		// Screenshot couldn't be captured
+		if (path == null || path.isEmpty()) {
+
+			LoggerUtil.warn("Skipping screenshot attachment : " + stepName);
+
+			if (test != null) {
+				test.warning("Screenshot not available : " + stepName);
+			}
+
+			return;
+		}
+
 		try {
 
-			test.info(stepName,
-
-					MediaEntityBuilder.createScreenCaptureFromPath(path).build());
+			test.info(stepName, MediaEntityBuilder.createScreenCaptureFromPath(path).build());
 
 		} catch (Exception e) {
 
-			e.printStackTrace();
+			LoggerUtil.error("Unable to attach screenshot : " + e.getMessage());
 		}
-
 	}
 
 	// TC-01-002
@@ -222,7 +234,7 @@ public class LoginPage extends BaseTest {
 		try {
 
 			// Replace with your actual dashboard locator
-			Locator dashboard = page.locator("//span[normalize-space()= \"Projects\"]");
+			Locator dashboard = page.locator(projectsTab);
 
 			dashboard.waitFor();
 
@@ -259,7 +271,7 @@ public class LoginPage extends BaseTest {
 
 	public void clickSignupLink() {
 		LoggerUtil.info("Clicking sign up");
-		page.locator("text='Signup'").click();
+		page.locator(ConfigReader.getLocator("login.signup.button")).click();
 		attachStepScreenshot("Clicked sign up");
 	}
 
@@ -294,11 +306,12 @@ public class LoginPage extends BaseTest {
 	public boolean isLogoVisible() {
 		return page.locator("img").first().isVisible();
 	}
+
 	public String getUnapprovedUserLoginErrorMessage() {
 
 		LoggerUtil.info("Fetching Login Error Message");
 
 		return page.locator("text='Your permission request is still pending admin approval.'").textContent();
 
-}
+	}
 }

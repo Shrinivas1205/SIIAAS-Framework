@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.UserManagementPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_036 extends BaseTest {
 
-    @Test(description = "TC-02-036 Verify User Requests Table Shows Correct Columns")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-036 Verify User Requests Table Shows Correct Columns")
     public void verifyUserRequestsTableColumns() {
 
         LoginPage loginPage = new LoginPage(page);

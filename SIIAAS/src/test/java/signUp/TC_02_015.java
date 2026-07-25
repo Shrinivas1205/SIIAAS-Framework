@@ -6,60 +6,51 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
+import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_015 extends BaseTest {
 
-	@Test(description = "TC-02-015 : Verify signup with empty Location field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-015 Verify signup with empty Location field")
 	public void verifySignupWithEmptyLocation() {
 
 		LoginPage loginPage = new LoginPage(page);
 		SignupPage signupPage = new SignupPage(page);
 
-		test.info("TC-02-015 Execution Started");
+		LoggerUtil.info("========== TC-02-015 STARTED ==========");
 
-		/*
-		 * STEP 1 : Open Signup Page
-		 */
+		// Open Signup Page
 		LoggerUtil.info("Opening Signup Page");
 
 		loginPage.clickSignupLink();
 
-		/*
-		 * STEP 2 : Fill Form Except Location
-		 */
-		LoggerUtil.info("Entering Signup Details Without Location");
+		// Enter Signup Details Except Location
+		LoggerUtil.info("Entering Signup Details Except Location");
 
-		signupPage.enterFullName("John Doe");
+		signupPage.enterFullName(ConfigReader.getProperty("tc02014.name"));
+		signupPage.enterEmail(ConfigReader.getProperty("tc02014.email"));
+		signupPage.enterPassword(ConfigReader.getProperty("tc02014.password"));
+		signupPage.enterConfirmPassword(ConfigReader.getProperty("tc02014.confirmPassword"));
+		signupPage.selectDesignation(ConfigReader.getProperty("tc02014.designation"));
+		signupPage.selectDepartment(ConfigReader.getProperty("tc02014.department"));
+		// Location intentionally left blank
 
-		signupPage.enterEmail("john.location@test.com");
+		loginPage.attachStepScreenshot("Entered signup details with empty Location");
 
-		signupPage.enterPassword("Pass@123");
-
-		signupPage.enterConfirmPassword("Pass@123");
-
-		signupPage.selectDesignation("Engineer");
-
-		signupPage.selectDepartment("IT");
-
-		// Intentionally NOT entering Location
-
-		/*
-		 * STEP 3 : Click Sign Up
-		 */
-		LoggerUtil.info("Clicking Sign Up Button");
+		// Click Sign Up
+		LoggerUtil.info("Clicking Signup Button");
 
 		signupPage.clickSignUpButton();
 
-		/*
-		 * STEP 4 : Verify Validation Message
-		 */
-		String actualMessage = signupPage.getValidationMessage("All fields are required.");
+		// Verify Validation Message
+		LoggerUtil.info("Verifying Validation Message");
 
-		LoggerUtil.info("Validation Message Displayed : " + actualMessage);
+		Assert.assertEquals(signupPage.getValidationMessage("All fields are required."), "All fields are required.",
+				"Incorrect validation message displayed");
 
-		Assert.assertEquals(actualMessage, "All fields are required.", "Incorrect validation message displayed");
+		loginPage.attachStepScreenshot("Validation message displayed for empty Location field");
 
-		test.pass("Location Required Validation Verified Successfully");
+		LoggerUtil.info("========== TC-02-015 PASSED ==========");
 	}
 }

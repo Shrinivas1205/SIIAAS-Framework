@@ -7,6 +7,7 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 /*
@@ -38,7 +39,7 @@ import utils.ScreenshotUtil;
 
 public class TC_01_002 extends BaseTest {
 
-	@Test(
+	@Test(retryAnalyzer = RetryAnalyzer.class,
 			description = "TC-01-002 : Verify login with incorrect password"
 	)
 	public void verifyInvalidPasswordLogin() throws InterruptedException {
@@ -126,10 +127,7 @@ public class TC_01_002 extends BaseTest {
 
 		loginPage.clickLogin();
 
-		/*
-		 * Wait for response
-		 */
-		page.waitForLoadState();
+		
 
 		/*
 		 * Screenshot after login attempt

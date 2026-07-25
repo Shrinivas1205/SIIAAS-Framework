@@ -7,10 +7,11 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_027 extends BaseTest {
 
-    @Test(description = "TC-02-027 Verify all required fields are marked with asterisk (*)")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-027 Verify all required fields are marked with asterisk (*)")
     public void verifyAllRequiredFieldsMarkedWithAsterisk() {
 
         LoginPage loginPage = new LoginPage(page);

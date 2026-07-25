@@ -8,28 +8,27 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_017 extends BaseTest {
 
-	@Test(description = "TC-02-017 : Verify signup with invalid email missing domain")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-017 Verify signup with invalid email missing domain")
 	public void verifySignupWithInvalidEmailMissingDomain() {
 
 		LoginPage loginPage = new LoginPage(page);
 		SignupPage signupPage = new SignupPage(page);
 
-		test.info("TC-02-017 Execution Started");
+		LoggerUtil.info("========== TC-02-017 STARTED ==========");
 
-		/*
-		 * STEP 1 : Open Signup Page
-		 */
+		// Open Signup Page
 		LoggerUtil.info("Opening Signup Page");
 
 		loginPage.clickSignupLink();
 
-		/*
-		 * STEP 2 : Fill Signup Form
-		 */
-		LoggerUtil.info("Entering Signup Details");
+		loginPage.attachStepScreenshot("Signup page opened");
+
+		// Enter Signup Details
+		LoggerUtil.info("Entering Signup Details With Invalid Email");
 
 		signupPage.enterFullName(ConfigReader.getProperty("signup.name"));
 
@@ -45,20 +44,30 @@ public class TC_02_017 extends BaseTest {
 
 		signupPage.selectLocation(ConfigReader.getProperty("signup.location"));
 
-		/*
-		 * STEP 3 : Click Sign Up
-		 */
+		loginPage.attachStepScreenshot("Entered invalid email without domain");
+
+		// Click Sign Up
 		LoggerUtil.info("Clicking Sign Up Button");
 
 		signupPage.clickSignUpButton();
 
-		/*
-		 * STEP 4 : Verify Validation
-		 */
-		String actualMessage = signupPage.getValidationMessage("Please enter a valid email address.");
+		loginPage.attachStepScreenshot("Clicked Sign Up with invalid email");
 
-		Assert.assertEquals(actualMessage, "Please enter a valid email address.");
+		// Verify Validation Message
+		LoggerUtil.info("Verifying Invalid Email Validation Message");
 
-		test.pass("Invalid Email Validation Verified Successfully");
+		Assert.assertEquals(
+
+				signupPage.getValidationMessage("Please enter a valid email address."),
+
+				"Please enter a valid email address.",
+
+				"Incorrect validation message displayed"
+
+		);
+
+		loginPage.attachStepScreenshot("Invalid email validation displayed");
+
+		LoggerUtil.info("========== TC-02-017 PASSED ==========");
 	}
 }

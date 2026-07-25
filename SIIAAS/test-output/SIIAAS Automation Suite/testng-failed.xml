@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [SIIAAS Automation Suite]">
+  <listeners>
+    <listener class-name="listeners.RetryListener"/>
+  </listeners>
   <test thread-count="5" parallel="classes" name="Login Tests(failed)">
     <classes>
-      <class name="login.TC_01_026">
-        <methods>
-          <include name="verifyLoginWithUppercaseOrMixedCaseEmail"/>
-          <include name="tearDown"/>
-          <include name="flushReport"/>
-          <include name="setup"/>
-          <include name="startReport"/>
-        </methods>
-      </class> <!-- login.TC_01_026 -->
       <class name="login.TC_01_024">
         <methods>
           <include name="tearDown"/>
@@ -21,15 +15,15 @@
           <include name="startReport"/>
         </methods>
       </class> <!-- login.TC_01_024 -->
-      <class name="login.TC_01_004">
+      <class name="login.TC_01_001">
         <methods>
           <include name="tearDown"/>
           <include name="flushReport"/>
           <include name="setup"/>
           <include name="startReport"/>
-          <include name="verifyNonApprovedUserLogin"/>
+          <include name="verifyValidLogin"/>
         </methods>
-      </class> <!-- login.TC_01_004 -->
+      </class> <!-- login.TC_01_001 -->
       <class name="login.TC_01_023">
         <methods>
           <include name="tearDown"/>
@@ -39,10 +33,19 @@
           <include name="verifyLoggedInUserRedirectedFromLoginPage"/>
         </methods>
       </class> <!-- login.TC_01_023 -->
+      <class name="login.TC_01_004">
+        <methods>
+          <include name="tearDown"/>
+          <include name="flushReport"/>
+          <include name="setup"/>
+          <include name="startReport"/>
+          <include name="verifyNonApprovedUserLogin"/>
+        </methods>
+      </class> <!-- login.TC_01_004 -->
       <class name="login.TC_01_011">
         <methods>
-          <include name="verifyLoginWithVeryLongPasswordInput"/>
           <include name="tearDown"/>
+          <include name="verifyLoginWithVeryLongPasswordInput"/>
           <include name="flushReport"/>
           <include name="setup"/>
           <include name="startReport"/>

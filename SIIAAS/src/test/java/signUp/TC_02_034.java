@@ -2,15 +2,16 @@ package signUp;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.SignupPage;
+import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_034 extends BaseTest {
 
-	@Test(description = "TC-02-034 Verify Tab Key Navigation Across Signup Fields")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-034 Verify Tab Key Navigation Across Signup Fields")
 	public void verifyTabNavigationAcrossSignupFields() {
 
 		LoginPage loginPage = new LoginPage(page);
@@ -28,7 +29,7 @@ public class TC_02_034 extends BaseTest {
 		/*
 		 * Click Name Field
 		 */
-		page.locator(signupPage.fullNameField).click();
+		page.locator(ConfigReader.getLocator("signup.fullName")).click();
 
 		loginPage.attachStepScreenshot("Name_Field_Focused");
 
@@ -38,7 +39,7 @@ public class TC_02_034 extends BaseTest {
 		page.keyboard().press("Tab");
 		String placeholder = signupPage.getFocusedElementAttribute("placeholder");
 
-		Assert.assertEquals(placeholder, "Enter your email id");
+		Assert.assertEquals(placeholder, "Enter your Email Id");
 
 		/*
 		 * Email -> Password
@@ -55,7 +56,7 @@ public class TC_02_034 extends BaseTest {
 		page.keyboard().press("Tab");
 		String placeholder2 = signupPage.getFocusedElementAttribute("placeholder");
 
-		Assert.assertEquals(placeholder2, "Confirm your password");
+		Assert.assertEquals(placeholder2, "Confirm your Password");
 		/*
 		 * Confirm Password -> Designation
 		 */
@@ -63,7 +64,7 @@ public class TC_02_034 extends BaseTest {
 		page.keyboard().press("Tab");
 		String placeholder3 = signupPage.getFocusedElementAttribute("placeholder");
 
-		Assert.assertEquals(placeholder3, "Enter your designation");
+		Assert.assertEquals(placeholder3, "Enter your Designation");
 
 		/*
 		 * Designation -> Department
@@ -71,7 +72,7 @@ public class TC_02_034 extends BaseTest {
 		page.keyboard().press("Tab");
 		String placeholder4 = signupPage.getFocusedElementAttribute("placeholder");
 
-		Assert.assertEquals(placeholder4, "Enter your department");
+		Assert.assertEquals(placeholder4, "Enter your Department");
 
 		/*
 		 * Department -> Location

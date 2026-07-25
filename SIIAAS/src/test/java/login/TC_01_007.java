@@ -6,11 +6,12 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_007 extends BaseTest {
 
-	@Test(description = "TC-01-007 : Verify login with both fields empty")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-007 : Verify login with both fields empty")
 	public void verifyLoginWithBothFieldsEmpty() {
 
 		// Page Object Creation

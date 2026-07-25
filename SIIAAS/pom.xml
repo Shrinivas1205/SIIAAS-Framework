@@ -4,11 +4,9 @@
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.playwright</groupId>
     <artifactId>PlaywrightFramework</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
     <dependencies>
 
         <!-- Playwright Dependency -->
@@ -76,7 +74,6 @@
     <version>2.0.13</version>
 
 </dependency>
-
 
     	<dependency>
     		<groupId>PlaywrightTest</groupId>

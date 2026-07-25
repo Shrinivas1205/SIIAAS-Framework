@@ -7,11 +7,11 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
-import utils.ScreenshotUtil;
+import utils.RetryAnalyzer;
 
 public class TC_01_019 extends BaseTest {
 
-    @Test(description = "TC-01-019 : Verify successful login redirects to Projects page")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-019 : Verify successful login redirects to Projects page")
     public void verifySuccessfulLoginRedirectsToProjectsPage() {
 
         // Page Object Creation
@@ -30,12 +30,8 @@ public class TC_01_019 extends BaseTest {
                 ConfigReader.getProperty("password")
 
         );
-
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Valid_Credentials_Entered"
-        );
+        
+        loginPage.attachStepScreenshot("Valid_Credentials_Entered");
 
         // Verify Projects Page Displayed
         LoggerUtil.info("Verifying Navigation To Projects Page");
@@ -43,12 +39,9 @@ public class TC_01_019 extends BaseTest {
 
         boolean isProjectsDashboardDisplayed =
                 loginPage.isProjectsDashboardDisplayed();
+        
+        loginPage.attachStepScreenshot("Projects_Page_Displayed");
 
-        ScreenshotUtil.captureAndAttachScreenshot(
-                page,
-                test,
-                "Projects_Page_Displayed"
-        );
 
         // Validation
         Assert.assertTrue(

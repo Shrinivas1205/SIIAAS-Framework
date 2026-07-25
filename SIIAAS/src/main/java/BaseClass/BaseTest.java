@@ -135,6 +135,36 @@ public class BaseTest {
 			}
 		}
 	}
+	/*
+	 * ============================================================
+	 * Close Browser Resources
+	 * ============================================================
+	 */
+	private void closeBrowserResources() {
+
+	    try {
+
+	        if (page != null) {
+	            LoggerUtil.info("Closing Page");
+	            page.close();
+	        }
+
+	        if (context != null) {
+	            LoggerUtil.info("Closing Browser Context");
+	            context.close();
+	        }
+
+	        if (browser != null) {
+	            LoggerUtil.info("Closing Browser");
+	            browser.close();
+	        }
+
+	    } catch (Exception e) {
+
+	        LoggerUtil.error("Error while closing browser resources : "
+	                + e.getMessage());
+	    }
+	}
 
 	// ============================================================
 	// @AfterMethod — Runs AFTER every individual test method
@@ -142,70 +172,46 @@ public class BaseTest {
 	@AfterMethod(alwaysRun = true)
 	public void tearDown(ITestResult result) {
 
-		// ── TEST PASSED ───────────────────────────────────────
-		if (result.getStatus() == ITestResult.SUCCESS) {
+	    if (result.getStatus() == ITestResult.SUCCESS) {
 
-			LoggerUtil.info("TEST PASSED");
+	        LoggerUtil.info("TEST PASSED");
 
-			// Capture pass screenshot (null-safe)
-			String passShot = ScreenshotUtil.captureScreenshot(page, "Test_Passed");
+	    } else if (result.getStatus() == ITestResult.FAILURE) {
 
-			if (passShot != null) {
-				try {
-					test.pass(
-							"TEST PASSED",
-							MediaEntityBuilder.createScreenCaptureFromPath(passShot).build()
-					);
-				} catch (Exception e) {
-					LoggerUtil.error("Failed to attach pass screenshot: " + e.getMessage());
-				}
-			} else {
-				// Log pass status even if screenshot is unavailable
-				test.pass("TEST PASSED (screenshot unavailable)");
-			}
-		}
+	        LoggerUtil.error("TEST FAILED");
 
-		// ── TEST FAILED ───────────────────────────────────────
-		else if (result.getStatus() == ITestResult.FAILURE) {
+	        String failShot =
+	                ScreenshotUtil.captureScreenshot(page, "Test_Failed");
 
-			LoggerUtil.error("TEST FAILED");
+	        if (failShot != null) {
 
-			// Capture failure screenshot (null-safe)
-			String failShot = ScreenshotUtil.captureScreenshot(page, "Test_Failed");
+	            try {
 
-			if (failShot != null) {
-				try {
-					test.fail(
-							result.getThrowable(),
-							MediaEntityBuilder.createScreenCaptureFromPath(failShot).build()
-					);
-				} catch (Exception e) {
-					LoggerUtil.error("Failed to attach failure screenshot: " + e.getMessage());
-				}
-			} else {
-				// Log failure with exception even if screenshot is unavailable
-				test.fail(result.getThrowable());
-			}
-		}
+	                test.fail(
+	                        result.getThrowable(),
+	                        MediaEntityBuilder
+	                                .createScreenCaptureFromPath(failShot)
+	                                .build()
+	                );
 
-		// ── TEST SKIPPED ──────────────────────────────────────
-		else if (result.getStatus() == ITestResult.SKIP) {
+	            } catch (Exception e) {
 
-			LoggerUtil.warn("TEST SKIPPED");
-			test.skip("TEST SKIPPED");
-		}
-		
+	                LoggerUtil.error(
+	                        "Failed attaching screenshot : "
+	                                + e.getMessage()
+	                );
+	            }
+	        }
 
-		// ── FLUSH REPORT ──────────────────────────────────────
-		// Write current test results to the report file
-		extent.flush();
+	    } else {
 
-		// ── CLOSE BROWSER ─────────────────────────────────────
-		/*
-		 * if (browser != null) { LoggerUtil.info("Closing Browser"); browser.close(); }
-		 */
+	        LoggerUtil.warn("TEST SKIPPED");
+	        test.skip("TEST SKIPPED");
+	    }
 
-		LoggerUtil.info("========== TEST FINISHED ==========");
+	    closeBrowserResources();
+
+	    LoggerUtil.info("========== TEST FINISHED ==========");
 	}
 
 	// ============================================================
@@ -224,6 +230,11 @@ public class BaseTest {
 	private void change() {
 		
 		System.out.println("change");// TODO Auto-generated method stub
+
+	}
+private void change1() {
+		
+		System.out.println("test");// TODO Auto-generated method stub
 
 	}
 }

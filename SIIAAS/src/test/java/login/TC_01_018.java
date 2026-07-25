@@ -6,11 +6,12 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_018 extends BaseTest {
 
-    @Test(description = "TC-01-018 : Verify 'Signup' link is present and navigates correctly")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-018 : Verify 'Signup' link is present and navigates correctly")
     public void verifySignupLinkNavigation() {
 
         // Page Object Creation

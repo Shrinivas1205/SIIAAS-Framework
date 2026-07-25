@@ -7,74 +7,85 @@ import BaseClass.BaseTest;
 import Pages.LoginPage;
 import Pages.UserManagementPage;
 import utils.ConfigReader;
+import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_004 extends BaseTest {
-	
-	//before running change the mail id of the approver user
 
-	@Test(description = "TC-02-004 Verify admin approves a pending user request")
+	// Before running, change the pending user's email in config.properties
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "TC-02-004 Verify admin approves a pending user request")
 	public void verifyAdminApprovesUserRequest() {
+
+		LoginPage loginPage = new LoginPage(page);
+		UserManagementPage userPage = new UserManagementPage(page);
+
+		LoggerUtil.info("========== TC-02-004 STARTED ==========");
 
 		String email = ConfigReader.getProperty("pendingUserEmail");
 
-		LoginPage loginPage = new LoginPage(page);
-
-		UserManagementPage userPage = new UserManagementPage(page);
-
-		test.info("TC-02-004 Execution Started");
-
-		// Login
+		LoggerUtil.info("Logging in as Admin");
 
 		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 
-		test.pass("Admin Login Successful");
+		loginPage.attachStepScreenshot("Admin_Login_Successful");
 
-		// Open User Management
+		LoggerUtil.info("Opening User Management");
 
 		userPage.openUserManagement();
 
+		loginPage.attachStepScreenshot("User_Management_Page");
+
+		LoggerUtil.info("Opening User Requests");
+
 		userPage.openUserRequestsTab();
 
-		test.pass("User Requests Opened");
+		loginPage.attachStepScreenshot("User_Requests_Tab");
 
-		// Verify Request
+		LoggerUtil.info("Verifying Pending User");
 
 		Assert.assertTrue(userPage.isUserPresent(email), "User Request Not Found");
 
-		test.pass("Pending User Found");
+		loginPage.attachStepScreenshot("Pending_User_Found");
 
-		// Assign Permission
+		LoggerUtil.info("Opening Assign Permission Popup");
 
 		userPage.clickAssign(email);
 
-		Assert.assertTrue(userPage.isAssignPermissionPopupDisplayed());
+		Assert.assertTrue(userPage.isAssignPermissionPopupDisplayed(), "Assign Permission Popup Not Displayed");
 
-		test.pass("Assign Permission Popup Opened");
+		loginPage.attachStepScreenshot("Assign_Permission_Popup");
+
+		LoggerUtil.info("Assigning Super User Permission");
 
 		userPage.assignSuperUserPermission();
 
-		test.pass("Super User Assigned");
+		loginPage.attachStepScreenshot("Permission_Assigned");
 
-		// Approve
+		LoggerUtil.info("Approving User");
 
 		userPage.clickApprove(email);
 
-		test.pass("Approve Button Clicked");
+		loginPage.attachStepScreenshot("Approve_Button_Clicked");
 
-		// Toast
+		LoggerUtil.info("Verifying Approval Toast");
 
 		Assert.assertTrue(userPage.isApprovalToastDisplayed(), "Approval Toast Not Displayed");
 
-		test.pass("Approval Toast Verified");
+		loginPage.attachStepScreenshot("Approval_Toast");
 
-		// All Users
+		LoggerUtil.info("Opening All Users");
 
 		userPage.openAllUsersTab();
 
+		loginPage.attachStepScreenshot("All_Users_Tab");
+
+		LoggerUtil.info("Verifying User in All Users");
+
 		Assert.assertTrue(userPage.isUserPresentInAllUsers(email), "User Not Found In All Users");
 
-		test.pass("User Appears In All Users");
+		loginPage.attachStepScreenshot("User_Found_In_All_Users");
 
-		test.pass("TC-02-004 Passed");
+		LoggerUtil.info("========== TC-02-004 PASSED ==========");
 	}
 }

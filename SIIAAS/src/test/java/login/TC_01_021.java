@@ -6,11 +6,12 @@ import org.testng.annotations.Test;
 import BaseClass.BaseTest;
 import Pages.LoginPage;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 import utils.ScreenshotUtil;
 
 public class TC_01_021 extends BaseTest {
 
-    @Test(description = "TC-01-021 : Verify login page UI elements are displayed correctly")
+    @Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-01-021 : Verify login page UI elements are displayed correctly")
     public void verifyLoginPageUIElements() {
 
         // Page Object Creation

@@ -2,8 +2,10 @@ package Pages;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.microsoft.playwright.Page;
-
+import com.microsoft.playwright.Locator;
 import BaseClass.BaseTest;
+import utils.ConfigReader;
+import utils.LocatorReader;
 import utils.LoggerUtil;
 import utils.ScreenshotUtil;
 
@@ -20,46 +22,47 @@ public class UserManagementPage extends BaseTest {
 	// Locators
 	// ============================================================
 
-	private String userManagementMenu = "//span[normalize-space()='User Management']";
-
-	private String userRequestsTab = "//button[contains(text(),'User Requests')]";
-
-	private String allUsersTab = "//button[contains(.,'All Users')]";
-
-	private String requestCountBadge = "//button[contains(.,'User Requests')]//span";
-
-	private String assignPermissionPopup = "//h2[contains(text(),'Assign Permission')]";
-
-	private String superUserCheckbox = "body > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1)";
-
-	private String assignSuperUserButton = "//button[contains(.,'Assign Super User Role')]";
-
-	private String successToast = "//div[contains(text (), 'request approved')]"; //
-	private String rejectToast = "//div[contains(text (), 'request rejected')]"; // div[@id='4']
+	private String userManagementMenu = ConfigReader.getLocator("usermanagement.menu");
+	private String allUsersTab = ConfigReader.getLocator("usermanagement.allUsers.tab");
+	private String userRequestsTab = ConfigReader.getLocator("usermanagement.userRequests.tab");
+	private String userTable = ConfigReader.getLocator("usermanagement.table");
+	private String addUserButton = ConfigReader.getLocator("usermanagement.addUser.button");
+	private String searchBox = ConfigReader.getLocator("usermanagement.search");
+	private String nextButton = ConfigReader.getLocator("usermanagement.next");
+	private String previousButton = ConfigReader.getLocator("usermanagement.previous");
+	private String requestCountBadge = ConfigReader.getLocator("usermanagement.request.count");
+	private String assignPermissionPopup = ConfigReader.getLocator("usermanagement.assign.popup");
+	private String superUserCheckbox = ConfigReader.getLocator("usermanagement.superuser.checkbox");
+	private String assignSuperUserButton = ConfigReader.getLocator("usermanagement.assign.superuser.button");
+	private String successToast = ConfigReader.getLocator("usermanagement.success.toast");
+	private String rejectToast = ConfigReader.getLocator("usermanagement.reject.toast");
+	private String profileDropdown = ConfigReader.getLocator("profile.dropdown");
+	private String logoutOption = ConfigReader.getLocator("profile.logout");
+	private String logoutConfirmButton = ConfigReader.getLocator("profile.logout.confirm");
+	private String loginEmailField = ConfigReader.getLocator("login.email");
+	private final String userHeader = ConfigReader.getLocator("usermanagement.header.user");
+	private final String emailHeader = ConfigReader.getLocator("usermanagement.header.email");
+	private final String roleHeader = ConfigReader.getLocator("usermanagement.header.role");
+	private final String departmentHeader = ConfigReader.getLocator("usermanagement.header.department");
+	private final String permissionHeader = ConfigReader.getLocator("usermanagement.header.permissions");
+	private final String lastActiveHeader = ConfigReader.getLocator("usermanagement.header.lastactive");
+	private final String joinedHeader = ConfigReader.getLocator("usermanagement.header.joined");
+	private String firstRow = ConfigReader.getLocator("usermanagement.firstrow");
+	private String firstRowAvatar = ConfigReader.getLocator("usermanagement.firstrow.avatar");
+	private String firstRowUsername = ConfigReader.getLocator("usermanagement.firstrow.username");
+	private String firstRowEmail = ConfigReader.getLocator("usermanagement.firstrow.email");
+	private String firstRowRole = ConfigReader.getLocator("usermanagement.firstrow.role");
+	private String firstRowDepartment = ConfigReader.getLocator("usermanagement.firstrow.department");
+	private String firstRowPermission = ConfigReader.getLocator("usermanagement.firstrow.permission");
+	private String firstRowLastActive = ConfigReader.getLocator("usermanagement.firstrow.lastactive");
+	private String firstRowJoined = ConfigReader.getLocator("usermanagement.firstrow.joined");
 	
-	private String profileDropdown =
-	        "//div[@class='flex flex-row justify-start items-center gap-3']//div[3]//*[name()='svg']";
-
-	private String logoutOption =
-	        "//div[normalize-space()='Logout']";
-
-	private String logoutConfirmButton =
-	        "(//button[normalize-space()='Logout'])[2]";
-
-	private String loginEmailField =
-	        "//input[@placeholder='Enter email id']";
 
 	/*
 	 * All Users Table
 	 */
 
 	private String userEmailRow = "//td[contains(text(),'%s')]";
-
-	private String userNameCell = "//tr[td[contains(text(),'%s')]]";
-
-	private String userRoleCell = "//tr[td[contains(text(),'%s')]]//td[contains(@class,'role')]";
-
-	private String userDepartmentCell = "//tr[td[contains(text(),'%s')]]//td[contains(@class,'department')]";
 
 	// ============================================================
 	// Screenshot Helper
@@ -77,6 +80,7 @@ public class UserManagementPage extends BaseTest {
 
 			e.printStackTrace();
 		}
+
 	}
 
 	// ============================================================
@@ -117,6 +121,50 @@ public class UserManagementPage extends BaseTest {
 	}
 
 	// ============================================================
+	// UI Verification Methods
+	// ============================================================
+
+	/*
+	 * Verify All Users Tab Displayed
+	 */
+	public boolean isAllUsersTabDisplayed() {
+
+		LoggerUtil.info("Verifying All Users Tab");
+
+		return page.locator(allUsersTab).isVisible();
+	}
+
+	/*
+	 * Verify User Table Displayed
+	 */
+	public boolean isUserTableDisplayed() {
+
+		LoggerUtil.info("Verifying User Table");
+
+		return page.locator("//table").isVisible();
+	}
+
+	/*
+	 * Verify Search Box Displayed
+	 */
+	public boolean isSearchBoxDisplayed() {
+
+		LoggerUtil.info("Verifying Search Box");
+
+		return page.locator("//input[contains(@placeholder,'Search users')]").isVisible();
+	}
+
+	/*
+	 * Verify Add User Button Displayed
+	 */
+	public boolean isAddUserButtonDisplayed() {
+
+		LoggerUtil.info("Verifying Add User Button");
+
+		return page.locator("//button[contains(.,'Add User')]").isVisible();
+	}
+
+	// ============================================================
 	// User Verification
 	// ============================================================
 
@@ -139,8 +187,7 @@ public class UserManagementPage extends BaseTest {
 
 		LoggerUtil.info("Verifying Reject Button");
 
-		return page.locator("//tr[td[contains(text(),'" + email + "')]]//button[contains(text(),'Reject')]")
-				.isVisible();
+		return page.locator("//tr[td[contains(text(),'" + email + "')]]//button[contains(text(),'Deny')]").isVisible();
 	}
 
 	public String getRequestCount() {
@@ -227,6 +274,174 @@ public class UserManagementPage extends BaseTest {
 		return page.locator("//td[contains(text(),'" + email + "')]").isVisible();
 	}
 
+	// TC_07_001
+	
+	/*
+	 * Verify USER Header Displayed
+	 */
+	public boolean isUserHeaderDisplayed() {
+
+		LoggerUtil.info("Verifying USER Header");
+
+		return page.locator(userHeader).isVisible();
+	}
+
+	/*
+	 * Verify EMAIL Header Displayed
+	 */
+	public boolean isEmailHeaderDisplayed() {
+
+		LoggerUtil.info("Verifying EMAIL Header");
+
+		return page.locator(emailHeader).isVisible();
+	}
+
+	/*
+	 * Verify ROLE Header Displayed
+	 */
+	public boolean isRoleHeaderDisplayed() {
+
+		LoggerUtil.info("Verifying ROLE Header");
+
+		return page.locator(roleHeader).isVisible();
+	}
+
+	/*
+	 * Verify DEPARTMENT Header Displayed
+	 */
+	public boolean isDepartmentHeaderDisplayed() {
+
+		LoggerUtil.info("Verifying DEPARTMENT Header");
+
+		return page.locator(departmentHeader).isVisible();
+	}
+
+	/*
+	 * Verify PERMISSIONS Header Displayed
+	 */
+	public boolean isPermissionHeaderDisplayed() {
+
+		LoggerUtil.info("Verifying PERMISSIONS Header");
+
+		return page.locator(permissionHeader).isVisible();
+	}
+
+	/*
+	 * Verify LAST ACTIVE Header Displayed
+	 */
+	public boolean isLastActiveHeaderDisplayed() {
+
+		LoggerUtil.info("Verifying LAST ACTIVE Header");
+
+		return page.locator(lastActiveHeader).isVisible();
+	}
+
+	/*
+	 * Verify JOINED Header Displayed
+	 */
+	public boolean isJoinedHeaderDisplayed() {
+
+		LoggerUtil.info("Verifying JOINED Header");
+
+		return page.locator(joinedHeader).isVisible();
+	}
+	
+	//TC_07_002
+	
+	/*
+	 * Verify First User Row Exists
+	 */
+	public boolean isFirstUserDisplayed() {
+
+		LoggerUtil.info("Verifying First User Row");
+
+		return page.locator(firstRow).isVisible();
+	}
+
+	/*
+	 * Verify Avatar
+	 */
+	public boolean isAvatarDisplayed() {
+
+		LoggerUtil.info("Verifying Avatar");
+
+		return page.locator(firstRowAvatar).isVisible();
+	}
+
+	/*
+	 * Verify Username
+	 */
+	public boolean isUsernameDisplayed() {
+
+		LoggerUtil.info("Verifying Username");
+
+		return !page.locator(firstRowUsername).textContent().trim().isEmpty();
+	}
+
+	/*
+	 * Verify Email
+	 */
+	public boolean isEmailDisplayed() {
+
+		LoggerUtil.info("Verifying Email");
+
+		return !page.locator(firstRowEmail).textContent().trim().isEmpty();
+	}
+
+	/*
+	 * Verify Role
+	 */
+	public boolean isRoleDisplayed() {
+
+		LoggerUtil.info("Verifying Role");
+
+		String role = page.locator(firstRowRole).textContent().trim();
+
+		return role.equalsIgnoreCase("ADMIN")
+				|| role.equalsIgnoreCase("SUPER USER")
+				|| role.equalsIgnoreCase("USER");
+	}
+
+	/*
+	 * Verify Department
+	 */
+	public boolean isDepartmentDisplayed() {
+
+		LoggerUtil.info("Verifying Department");
+
+		return !page.locator(firstRowDepartment).textContent().trim().isEmpty();
+	}
+
+	/*
+	 * Verify Permission
+	 */
+	public boolean isPermissionDisplayed() {
+
+		LoggerUtil.info("Verifying Permission");
+
+		return !page.locator(firstRowPermission).textContent().trim().isEmpty();
+	}
+
+	/*
+	 * Verify Last Active
+	 */
+	public boolean isLastActiveDisplayed() {
+
+		LoggerUtil.info("Verifying Last Active");
+
+		return !page.locator(firstRowLastActive).textContent().trim().isEmpty();
+	}
+
+	/*
+	 * Verify Joined Date
+	 */
+	public boolean isJoinedDateDisplayed() {
+
+		LoggerUtil.info("Verifying Joined Date");
+
+		return !page.locator(firstRowJoined).textContent().trim().isEmpty();
+	}
+
 	// TC_02_005
 	/*
 	 * Click Reject Button
@@ -235,9 +450,15 @@ public class UserManagementPage extends BaseTest {
 
 		LoggerUtil.info("Rejecting User Request");
 
-		page.locator("//tr[td[contains(text(),'" + email + "')]]//button[contains(text(),'Reject')]").click();
+		page.locator("//tr[td[contains(text(),'" + email + "')]]//button[contains(text(),'Deny')]").click();
 
-		attachStepScreenshot("Reject_Clicked");
+		LoggerUtil.info("Clicked Deny on All users tab");
+
+		page.locator("(//button[normalize-space()='Cancel']/following::button)[1]").click();
+
+		LoggerUtil.info("Clicked Deny on pop up");
+
+		attachStepScreenshot("Deny_Clicked");
 	}
 
 	/*
@@ -293,58 +514,59 @@ public class UserManagementPage extends BaseTest {
 
 		return page.locator("text=" + value).isVisible();
 	}
-	
-	//TC_02_035
+
+	// TC_02_035
 	public int getUserRequestsCount() {
 
-	    LoggerUtil.info("Fetching User Requests Count");
+		LoggerUtil.info("Fetching User Requests Count");
 
-	    String countText = page.locator(requestCountBadge).textContent().trim();
+		String countText = page.locator(requestCountBadge).textContent().trim();
 
-	    return Integer.parseInt(countText);
+		return Integer.parseInt(countText);
 	}
+
 	/*
 	 * Logout From Application
 	 */
 	public void logout() {
 
-	    LoggerUtil.info("Opening Profile Dropdown");
+		LoggerUtil.info("Opening Profile Dropdown");
 
-	    page.locator(profileDropdown).click();
+		page.locator(profileDropdown).click();
 
-	    attachStepScreenshot("Profile_Dropdown_Opened");
+		attachStepScreenshot("Profile_Dropdown_Opened");
 
-	    LoggerUtil.info("Clicking Logout");
+		LoggerUtil.info("Clicking Logout");
 
-	    page.locator(logoutOption).click();
+		page.locator(logoutOption).click();
 
-	    attachStepScreenshot("Logout_Clicked");
+		attachStepScreenshot("Logout_Clicked");
 
-	    LoggerUtil.info("Confirming Logout");
+		LoggerUtil.info("Confirming Logout");
 
-	    page.locator(logoutConfirmButton).click();
+		page.locator(logoutConfirmButton).click();
 
-	    attachStepScreenshot("Logout_Confirmed");
-	    
+		attachStepScreenshot("Logout_Confirmed");
+
 	}
+
 	/*
 	 * Verify User Redirected To Login Page
 	 */
 	public boolean isLogoutSuccessful() {
 
-	    LoggerUtil.info("Verifying Login Page After Logout");
+		LoggerUtil.info("Verifying Login Page After Logout");
 
-	    return page.locator(loginEmailField).isVisible();
+		return page.locator(loginEmailField).isVisible();
 	}
+
 	/*
 	 * Verify Table Column Header
 	 */
 	public boolean isColumnDisplayed(String columnName) {
 
-	    LoggerUtil.info("Verifying Column : " + columnName);
+		LoggerUtil.info("Verifying Column : " + columnName);
 
-	    return page.locator(
-	            "//th[normalize-space()='" + columnName + "']"
-	    ).isVisible();
+		return page.locator("//th[normalize-space()='" + columnName + "']").isVisible();
 	}
 }

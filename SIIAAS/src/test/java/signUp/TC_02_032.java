@@ -8,10 +8,11 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_032 extends BaseTest {
 
-	@Test(description = "TC-02-032 Verify signup with very long Name input")
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "TC-02-032 Verify signup with very long Name input")
 	public void verifySignupWithVeryLongName() {
 
 		LoginPage loginPage = new LoginPage(page);

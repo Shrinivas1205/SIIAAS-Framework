@@ -8,84 +8,52 @@ import Pages.LoginPage;
 import Pages.SignupPage;
 import utils.ConfigReader;
 import utils.LoggerUtil;
+import utils.RetryAnalyzer;
 
 public class TC_02_013 extends BaseTest {
 
-    @Test(
-        description = "TC-02-013 Verify signup with empty Designation field"
-    )
-    public void verifySignupWithEmptyDesignationField() {
+	@Test(retryAnalyzer = RetryAnalyzer.class,
+			description = "TC-02-013 Verify signup with empty Designation field")
+	public void verifySignupWithEmptyDesignationField() {
 
-        LoginPage loginPage = new LoginPage(page);
-        SignupPage signupPage = new SignupPage(page);
+		LoginPage loginPage = new LoginPage(page);
+		SignupPage signupPage = new SignupPage(page);
 
-        LoggerUtil.info("========== STARTING TC-02-013 ==========");
+		LoggerUtil.info("========== TC-02-013 STARTED ==========");
 
-        /*
-         * STEP 1 : Open Signup Page
-         */
-        LoggerUtil.info("Opening Signup Page");
+		// Open Signup Page
+		LoggerUtil.info("Opening Signup Page");
 
-        loginPage.clickSignupLink();
+		loginPage.clickSignupLink();
 
-        test.info("Signup Page Opened");
+		// Enter Signup Details Except Designation
+		LoggerUtil.info("Entering Signup Details Except Designation");
 
-        /*
-         * STEP 2 : Enter Signup Details
-         */
-        LoggerUtil.info("Entering Signup Details");
+		signupPage.enterFullName(ConfigReader.getProperty("tc02013.name"));
+		signupPage.enterEmail(ConfigReader.getProperty("tc02013.email"));
+		signupPage.enterPassword(ConfigReader.getProperty("tc02013.password"));
+		signupPage.enterConfirmPassword(ConfigReader.getProperty("tc02013.confirmPassword"));
+		//empty Designation field
+		signupPage.selectDepartment(ConfigReader.getProperty("tc02013.department"));
+		signupPage.selectLocation(ConfigReader.getProperty("tc02013.location"));
 
-        signupPage.enterFullName(
-                ConfigReader.getProperty("tc02013.name"));
+		loginPage.attachStepScreenshot("Entered signup details with empty Designation");
 
-        signupPage.enterEmail(
-                ConfigReader.getProperty("tc02013.email"));
+		// Click Sign Up
+		LoggerUtil.info("Clicking Signup Button");
 
-        signupPage.enterPassword(
-                ConfigReader.getProperty("tc02013.password"));
+		signupPage.clickSignUpButton();
 
-        signupPage.enterConfirmPassword(
-                ConfigReader.getProperty("tc02013.confirmPassword"));
+		// Verify Validation Message
+		LoggerUtil.info("Verifying Validation Message");
 
-        // Designation intentionally blank
-        signupPage.selectDesignation(
-                ConfigReader.getProperty("tc02013.designation"));
+		Assert.assertEquals(
+				signupPage.getValidationMessage("All fields are required."),
+				"All fields are required.",
+				"Incorrect validation message displayed");
 
-        signupPage.selectDepartment(
-                ConfigReader.getProperty("tc02013.department"));
+		loginPage.attachStepScreenshot("Validation message displayed for empty Designation field");
 
-        signupPage.selectLocation(
-                ConfigReader.getProperty("tc02013.location"));
-
-        test.info("Entered Form Data With Empty Designation");
-
-        /*
-         * STEP 3 : Click Sign Up
-         */
-        LoggerUtil.info("Clicking Sign Up Button");
-
-        signupPage.clickSignUpButton();
-
-        test.info("Sign Up Button Clicked");
-
-        /*
-         * STEP 4 : Verify Validation Message
-         */
-        LoggerUtil.info("Verifying Designation Validation Message");
-
-        String actualMessage =
-                signupPage.getValidationMessage("All fields are required.");
-
-        Assert.assertEquals(
-                actualMessage,
-                "All fields are required.",
-                "Incorrect validation message displayed"
-        );
-
-        test.pass(
-                "Designation Required Validation Displayed Successfully"
-        );
-
-        LoggerUtil.info("========== TC-02-013 PASSED ==========");
-    }
+		LoggerUtil.info("========== TC-02-013 PASSED ==========");
+	}
 }

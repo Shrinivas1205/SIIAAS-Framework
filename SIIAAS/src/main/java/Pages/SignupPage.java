@@ -3,6 +3,7 @@ package Pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import utils.ConfigReader;
 import utils.LoggerUtil;
 
 public class SignupPage {
@@ -16,23 +17,28 @@ public class SignupPage {
 	/*
 	 * Locators
 	 */
-	public String fullNameField = "//input[@placeholder='Enter your name']";
+	private String fullNameField = ConfigReader.getLocator("signup.fullName");
 
-	public String emailField = "input[type='email']";
+	private String emailField = ConfigReader.getLocator("signup.email");
 
-	public String passwordField = "//input[@placeholder='Enter your Password']";
+	private String passwordField = ConfigReader.getLocator("signup.password");
 
-	public String confirmPasswordField = "//input[@placeholder='Confirm your password']";
+	private String confirmPasswordField = ConfigReader.getLocator("signup.confirmPassword");
 
-	public String designationDropdown = "//input[@placeholder='Enter your designation']";
+	private String designationDropdown = ConfigReader.getLocator("signup.designation");
 
-	public String departmentDropdown = "//input[@placeholder='Enter your department']";
+	private String departmentDropdown = ConfigReader.getLocator("signup.department");
 
-	public String locationDropdown = "//input[@placeholder='Enter your Location']";
+	private String locationDropdown = ConfigReader.getLocator("signup.location");
 
-	public String signUpButton = "//button[normalize-space()='Sign Up']";
+	private String signUpButton = ConfigReader.getLocator("signup.button");
+	
+	private String loginemail = ConfigReader.getLocator("login.email");
+	
+	private String deniedUserErrorMessage =ConfigReader.getLocator("login.deniedusererrormessage");
 
-	private String passwordEyeIcon = "(//*[local-name()='svg'])[1]";
+	private String passwordEyeIcon = "(//*[local-name()='svg'])[1]"; 
+	
 
 	private String nameValidationMessage = "//input[@placeholder='Enter your name']/following::p[1]";
 
@@ -73,7 +79,7 @@ public class SignupPage {
 	 */
 	public void clickSignUpButton() {
 
-		page.click(signUpButton);
+		page.locator(signUpButton).click();
 	}
 
 	/*
@@ -128,6 +134,13 @@ public class SignupPage {
 
 		selectLocation(location);
 	}
+	// TC_02_007
+		public String getLoginwithDenieduserErrorMessage() {
+
+			LoggerUtil.info("Fetching Login Error Message");
+
+			return page.locator(deniedUserErrorMessage).textContent();
+		}
 
 	/*
 	 * Verify Signup Success
@@ -138,7 +151,7 @@ public class SignupPage {
 		try {
 
 			// Replace with your actual dashboard locator
-			Locator eemail = page.locator("//input[@placeholder ='Enter email id']");
+			Locator eemail = page.locator(loginemail);
 
 			eemail.waitFor();
 
@@ -314,7 +327,7 @@ public class SignupPage {
 
 		LoggerUtil.info("Verifying Login Page");
 
-		return page.locator("//input[@placeholder='Enter email id']").isVisible();
+		return page.locator(loginemail).isVisible();
 	}
 
 	// tc 34
@@ -385,26 +398,26 @@ public class SignupPage {
 	// TC-02-039
 
 	public String getNameValue() {
-	    return page.locator(fullNameField).inputValue();
+		return page.locator(fullNameField).inputValue();
 	}
 
 	public String getPasswordValue() {
-	    return page.locator(passwordField).inputValue();
+		return page.locator(passwordField).inputValue();
 	}
 
 	public String getConfirmPasswordValue() {
-	    return page.locator(confirmPasswordField).inputValue();
+		return page.locator(confirmPasswordField).inputValue();
 	}
 
 	public String getDesignationValue() {
-	    return page.locator(designationDropdown).inputValue();
+		return page.locator(designationDropdown).inputValue();
 	}
 
 	public String getDepartmentValue() {
-	    return page.locator(departmentDropdown).inputValue();
+		return page.locator(departmentDropdown).inputValue();
 	}
 
 	public String getLocationValue() {
-	    return page.locator(locationDropdown).inputValue();
+		return page.locator(locationDropdown).inputValue();
 	}
 }
